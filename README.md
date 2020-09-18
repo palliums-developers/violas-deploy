@@ -18,8 +18,8 @@ server {
 
 部署步骤：
 主服务器下载代码并编译：
-1、git clone https://github.com/palliums-developers/violas-deploy.git  violas_scripts &&　cd violas_scripts 
-2、./build_config.sh
+1、git clone https://github.com/palliums-developers/violas-deploy.git  violas_scripts 
+2、cd $HOME/violas_scripts && ./build_config.sh
 备注：
 运行build_config.sh时需要输入部署的节点数量、主服务器IP以及所有部署服务器的IP，以逗号分隔
 
