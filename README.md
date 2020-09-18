@@ -18,7 +18,7 @@ server {
 
 部署步骤：
 主服务器下载代码并编译：
-1、git clone https://github.com/palliums-developers/violas-deploy.git &&　cd violas_deploy 
+1、git clone https://github.com/palliums-developers/violas_scripts.git &&　cd violas_scripts 
 2、./build_config.sh
 备注：
 运行build_config.sh时需要输入部署的节点数量、主服务器IP以及所有部署服务器的IP，以逗号分隔
@@ -36,7 +36,7 @@ server {
 (1)下载violas并编译;
 (2)交互界面输入准备创建的节点数、部署服务器IP以及所有节点的IP（以逗号分隔），根据输入信息生成节点配置文件;
 (3)将配置文件以及部署脚本打包并输出到nginx文件列表文件夹,路径：~/deploy_node
-初始配置文件（mint.key、waypoint、随机种子等）存放路径：~/violas_deploy/config
+初始配置文件（mint.key、waypoint、随机种子等）存放路径：~/violas_scripts/config
 
 2、deploy_node.sh
 实现功能：
