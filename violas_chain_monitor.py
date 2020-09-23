@@ -145,7 +145,7 @@ def loopMonitor(IP,processname,servername,log_file,error_file):
                     txt=fo.readlines()
                 keys=[k for k in range(0,len(txt))]
                 result={k:v for k,v in zip(keys,txt[::-1])}
-                num = 20
+                num = 200
                 if num >= len(txt):
                     num=len(txt)
                 for i in range(num):
@@ -158,7 +158,7 @@ def loopMonitor(IP,processname,servername,log_file,error_file):
 
         violas_error_sendmail(IP,error_file,servername,*receivers)
         violas_error_sendsms(IP,servername,error_file,mobile)
-    time.sleep(60)
+    time.sleep(600)
     loopMonitor(IP,processname,servername,log_file,error_file)
 
 if __name__ == '__main__':
