@@ -37,7 +37,7 @@ if [ $PythonPPID -eq 0 ]
 	CurrentViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 	if [ $CurrentViolasPPID -ne 0 ]
 		then
-		nohup python3 violas_error_send.py >>$logfile 2>&1 &
+		nohup python3 $pythonpro >>$logfile 2>&1 &
 	fi
 	CurrentPythonPPID=`ps -ef | grep $pythonpro | grep -v grep | wc -l`
 	if [ $CurrentPythonPPID -ne 0 ]
