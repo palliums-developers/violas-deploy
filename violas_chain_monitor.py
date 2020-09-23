@@ -14,29 +14,29 @@ import os
 import psutil
 import time
 
-def violas_error_sendmail(path,ip,log_file):
+def violas_error_sendmail(IP,error_file,servername,*receivers):
     #******设置发送邮件参数******
     # 第三方 SMTP 服务
-    mail_host="smtp.exmail.qq.com"  #设置服务器
-    mail_user="zyb@palliums.org"    #用户名
-    mail_pass="Qaz!123456"   #口令 
+    mail_host = "smtp.exmail.qq.com"  #设置服务器
+    mail_user = "zyb@palliums.org"   #用户名
+    mail_pass = "Qaz!123456"   #口令 
     
     sender = 'zyb@palliums.org'
-    receivers = ['zyb@palliums.org'] 
+    receivers = receivers 
 
     #创建一个带附件的实例
     message = MIMEMultipart()
     message['From'] = Header("violas", 'utf-8')
     message['To'] =  Header("zyb@palliums.org", 'utf-8')
-    subject = 'Violas chain error info'
+    subject = servername + ' error info'
     message['Subject'] = Header(subject, 'utf-8')
     
     #邮件正文内容
-    message.attach(MIMEText('这是violas[' + ip + ']报错信息，详见附件。', 'plain', 'utf-8'))
+    message.attach(MIMEText('这是' + servername + '[' + IP + ']报错信息，详见附件。', 'plain', 'utf-8'))
     
     # 构造附件1，传送当前目录下的 violas_log.txt 文件
-    violas_log = path + "/violas_error_log.txt"
-    att1 = MIMEText(open(violas_log, 'rb').read(), 'base64', 'utf-8')
+    # violas_log = path + "/violas_error_log.txt"
+    att1 = MIMEText(open(error_file, 'rb').read(), 'base64', 'utf-8')
     att1["Content-Type"] = 'application/octet-stream'
     # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
     att1["Content-Disposition"] = 'attachment; filename="violas_error_log.txt"'
@@ -91,21 +91,21 @@ def send_sms(apikey, text, mobile):
     conn.close()
     return response_str
 
-def violas_error_sendsms(ip,log_file):
+def violas_error_sendsms(IP,servername,error_file,mobile):
     #修改为您的apikey.可在官网（http://www.yunpian.com)登录后获取
     apikey = "c1c127eca677a50d341ded26d3022196"
     #修改为您要发送的手机号码，多个号码用逗号隔开
-    mobile = "18810656022"
+    # mobile = "18810656022"
     #修改为您要发送的短信内容
-    text = "【Violas】您的violas服务 " + ip + " 出现错误，请及时处理。"
+    text = "【Violas】您的 "+ servername + " 服务 " + IP + " 出现错误，请及时处理。"
     #查账户信息
     # print(get_user_info(apikey))
     #调用智能匹配模板接口发短信
     sms_info = send_sms(apikey,text,mobile)
-    with open(log_file,'a',encoding = 'utf-8') as f:
+    with open(error_file,'a',encoding = 'utf-8') as f:
         f.write("*************************************************************\n")            
         f.write("TIME:" +time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"\n")
-        f.write(sms_info.decode('utf-8'))
+        f.write(sms_info.decode('utf-8') + "\n")
     f.close()
 
 def checkprocess(processname):
@@ -127,44 +127,47 @@ def get_filename(dir):
                 (filename, extension) = os.path.splitext(filename)
                 return filename
 
-def loopMonitor(path,log_file):
-    nohup_file = path + "/violas.log"
-    if isinstance(checkprocess("libra-node"),int):
-        print("The violas chain status is normal")
-        with open(log_file,'a',encoding = 'utf-8') as f:
+def loopMonitor(IP,processname,servername,log_file,error_file):
+    if isinstance(checkprocess(processname),int):
+        print("The[ " + servername + " ]status is normal")
+        with open(error_file,'a',encoding = 'utf-8') as f:
             f.write("*************************************************************\n")            
-            f.write("TIME:" +time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+ " The violas chain status is normal.\n")
+            f.write("TIME:" +time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+ " The[ " + servername + " ]status is normal.\n")
         f.close()       
     else:
-        print("The violas chain status is error")
-        with open(log_file,'a',encoding = 'utf-8') as f:
+        print("The[ " + servername + " ]status is error")
+        with open(error_file,'a',encoding = 'utf-8') as f:
             f.write("*************************************************************\n")            
-            f.write("TIME:" +time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+ " The violas chain status is error,Please check the log.\n")
+            f.write("TIME:" +time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+ " The[ " + servername + " ]status is error,Please check the log.\n")
             f.write("error info:\n")
-            if os.path.exists(nohup_file):
-                with open(nohup_file,encoding = 'utf-8') as fo:
+            if os.path.exists(log_file):
+                with open(log_file,encoding = 'utf-8') as fo:
                     txt=fo.readlines()
                 keys=[k for k in range(0,len(txt))]
                 result={k:v for k,v in zip(keys,txt[::-1])}
-                num = 200
+                num = 20
                 if num >= len(txt):
                     num=len(txt)
                 for i in range(num):
                     f.write(result[num-1-i] + "\n")
                 fo.close()
             else:
-                f.write(nohup_file + " no exist!\n")           
+                f.write(log_file + " no exist!\n")           
         f.close()
-        os.system("sh start.sh")
+        os.system("sh start.sh") #尝试重新启动服务
 
-        #设置部署文件的路径，获取文件名(文件名是以ip命名的)
-        IP = get_filename(path)
-        violas_error_sendmail(path,IP,log_file)
-        violas_error_sendsms(IP,log_file)
-    time.sleep(600)
-    loopMonitor(path,log_file)
+        violas_error_sendmail(IP,error_file,servername,*receivers)
+        violas_error_sendsms(IP,servername,error_file,mobile)
+    time.sleep(60)
+    loopMonitor(IP,processname,servername,log_file,error_file)
 
 if __name__ == '__main__':
     path = os.path.dirname(os.path.realpath(__file__))
-    log_file = path + "/violas_error_log.txt"
-    loopMonitor(path,log_file)
+    processname = "libra-node" #设置进程名称
+    servername= "Violas Chain"   #设置服务名称
+    log_file = path + "/violas.log"    #设置日志文件路径
+    error_file = path + "/violas_error_log.txt"  #设置发送错误邮件日志路径
+    IP = get_filename(path)          #设置部署服务器IP
+    mobile = "18810656022"  #设置接收短信的手机号
+    receivers = ['zyb@palliums.org']  #设置接收邮件人列表
+    loopMonitor(IP,processname,servername,log_file,error_file)

@@ -3,7 +3,7 @@ filename=`ls -l |awk '/^d/ {print $NF}'`
 cd $filename
 data_dir_path=`echo $(pwd)`
 violaspro="libra-node"
-pythonpro="violas_error_send.py"
+pythonpro="violas_chain_monitor.py"
 
 ViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 if [ $ViolasPPID -ne 0 ]

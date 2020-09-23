@@ -3,7 +3,7 @@ filename=`ls -l |awk '/^d/ {print $NF}'`
 cd $filename
 data_dir_path=`echo $(pwd)`
 violaspro="libra-node"
-pythonpro="violas_error_send.py"
+pythonpro="violas_chain_monitor.py"
 logfile="$HOME/violascfg/violas.log"
 split_line="*************************************************************"
 
@@ -43,11 +43,11 @@ if [ $PythonPPID -eq 0 ]
 	if [ $CurrentPythonPPID -ne 0 ]
 		then
 		echo "$split_line">>$logfile
-		echo "`date "+%Y-%m-%d %H:%M:%S"`: violas_error_send.py is running" >>$logfile
+		echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro is running" >>$logfile
 		echo "$split_line">>$logfile
-		echo "`date "+%Y-%m-%d %H:%M:%S"`: violas_error_send.py start success"
+		echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro start success"
 	fi
 else
-	echo "`date "+%Y-%m-%d %H:%M:%S"`: violas_error_send.py process already exist"
+	echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro process already exist"
 fi
 
