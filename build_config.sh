@@ -75,7 +75,7 @@ if [ ! -d "deploy_node" ]; then
 	cp $config_dir_path/start.sh .
 	cp $config_dir_path/stop.sh .
 	cp $config_dir_path/cli.sh .
-	cp $config_dir_path/violas_error_send.py .
+	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/libra-node .
 else
 	rm -rf $HOME/deploy_node
@@ -86,7 +86,7 @@ else
 	cp $config_dir_path/start.sh .
 	cp $config_dir_path/stop.sh .
 	cp $config_dir_path/cli.sh .
-	cp $config_dir_path/violas_error_send.py .
+	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/libra-node .
 fi
 
@@ -105,7 +105,7 @@ do
 done
 
 cd  $HOME
-if [  -f "violas_scripts/config/0/node.yaml" ]; then
+if [  -f "$config_dir_path/config/0/node.yaml" ]; then
 	echo "********************************************************"
 	echo "Config generated"
 	echo "path:$config_dir_path/config/"

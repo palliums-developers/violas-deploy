@@ -102,12 +102,11 @@ fi
 
 if [  -f "violascfg/violas_error_send.py" ]; then
 	sudo rm $HOME/violascfg/violas_error_send.py
-	cd  $HOME/violascfg && curl -O -s http://$IP/violas_error_send.py
-	sudo chmod 775 $HOME/violascfg/violas_error_send.py
+	cd  $HOME/violascfg && curl -O -s http://$IP/violas_chain_monitor.py
+	sudo chmod 775 $HOME/violascfg/violas_chain_monitor.py
 else
-	cd  $HOME/violascfg && curl -O -s http://$IP/violas_error_send.py
-	sudo chmod 775 $HOME/violascfg/violas_error_send.py
-fi
+	cd  $HOME/violascfg && curl -O -s http://$IP/violas_chain_monitor.py
+	sudo chmod 775 $HOME/violascfg/violas_chain_monitor.py
 
 sh $HOME/violascfg/start.sh
 # `nohup $HOME/violascfg/libra-node  -f $data_dir_path/node.yaml >$HOME/violascfg/violas.log 2>&1 &`
