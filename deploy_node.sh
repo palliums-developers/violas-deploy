@@ -107,6 +107,7 @@ if [  -f "violascfg/violas_error_send.py" ]; then
 else
 	cd  $HOME/violascfg && curl -O -s http://$IP/violas_chain_monitor.py
 	sudo chmod 775 $HOME/violascfg/violas_chain_monitor.py
+fi
 
 sh $HOME/violascfg/start.sh
 # `nohup $HOME/violascfg/libra-node  -f $data_dir_path/node.yaml >$HOME/violascfg/violas.log 2>&1 &`
@@ -115,7 +116,7 @@ sleep 5
 ps -fe|grep libra-node |grep -v grep
 if [ $? -ne 0 ]
 	then
-	cat $HOME/violascfg/nohup.out
+	cat $HOME/violascfg/violas.log
 else
 	echo "*************************************************"
 	echo "VIOLAS SUCCESS START"
