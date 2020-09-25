@@ -168,6 +168,6 @@ if __name__ == '__main__':
     log_file = path + "/violas.log"    #设置日志文件路径
     error_file = path + "/violas_error_log.txt"  #设置发送错误邮件日志路径
     IP = get_filename(path)          #设置部署服务器IP
-    mobile = "18810656022"  #设置接收短信的手机号
-    receivers = ['zyb@palliums.org']  #设置接收邮件人列表
+    mobile = "18810656022"  #设置接收短信的手机号，多个号码用逗号隔开
+    receivers = ['zyb@palliums.org']  #设置接收邮件人列表，多个接收人用逗号隔开
     loopMonitor(IP,processname,servername,log_file,error_file)
