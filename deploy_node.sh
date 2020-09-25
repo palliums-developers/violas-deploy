@@ -91,13 +91,15 @@ else
 	sudo chmod 775 $HOME/violascfg/libra-node
 fi
 
-if [  -f "violascfg/cli.sh" ]; then
-	sudo rm $HOME/violascfg/cli.sh
-	cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
-	sudo chmod 775 $HOME/violascfg/cli.sh
-else
-	cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
-	sudo chmod 775 $HOME/violascfg/cli.sh
+if [  "$node_ip" = "$IP" ]; then
+	if [  -f "violascfg/cli.sh" ]; then
+		sudo rm $HOME/violascfg/cli.sh
+		cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
+		sudo chmod 775 $HOME/violascfg/cli.sh
+	else
+		cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
+		sudo chmod 775 $HOME/violascfg/cli.sh
+	fi
 fi
 
 if [  -f "violascfg/violas_error_send.py" ]; then

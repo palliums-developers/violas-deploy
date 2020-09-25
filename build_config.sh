@@ -53,6 +53,7 @@ echo $randseed >$config_dir_path/config/seed
 $HOME/violas/target/release/config-builder faucet -o $config_dir_path/config -s $randseed -n $num
 sed -i "s|IP=.*|IP=$master_node_ip|g" $config_dir_path/deploy_node.sh
 sed -i "s|tag=.*|tag=$tag|g" $config_dir_path/deploy_node.sh
+sed -i "s|config_path=.*|config_path=$config_dir_path|g" $config_dir_path/cli.sh
 
 for i in $(seq 1 $num)
 do
