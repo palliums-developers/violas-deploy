@@ -23,6 +23,9 @@ if [ $ViolasPPID -eq 0 ]
 		echo "`date "+%Y-%m-%d %H:%M:%S"` :violas is running" >>$logfile
 		echo "$split_line">>$logfile
 		echo "`date "+%Y-%m-%d %H:%M:%S"`: violas start success"
+	else
+		echo "`date "+%Y-%m-%d %H:%M:%S"`: violas start failed"
+		echo "`cat $logfile`"
 	fi
 else
 	echo "`date "+%Y-%m-%d %H:%M:%S"`: violas process already exist"
@@ -37,7 +40,7 @@ if [ $PythonPPID -eq 0 ]
 	CurrentViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 	if [ $CurrentViolasPPID -ne 0 ]
 		then
-		python3 $pythonpro
+		nohup python3 $pythonpro >>$logfile 2>&1 &
 	fi
 	sleep 3
 	CurrentPythonPPID=`ps -ef | grep $pythonpro | grep -v grep | wc -l`
@@ -47,6 +50,9 @@ if [ $PythonPPID -eq 0 ]
 		echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro is running" >>$logfile
 		echo "$split_line">>$logfile
 		echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro start success"
+	else
+		echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro start failed"
+		echo "`cat $logfile`"
 	fi
 else
 	echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro process already exist"
