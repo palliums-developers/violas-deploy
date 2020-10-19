@@ -37,8 +37,9 @@ if [ $PythonPPID -eq 0 ]
 	CurrentViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 	if [ $CurrentViolasPPID -ne 0 ]
 		then
-		nohup python3 $pythonpro >>$logfile 2>&1 &
+		python3 $pythonpro
 	fi
+	sleep 3
 	CurrentPythonPPID=`ps -ef | grep $pythonpro | grep -v grep | wc -l`
 	if [ $CurrentPythonPPID -ne 0 ]
 		then

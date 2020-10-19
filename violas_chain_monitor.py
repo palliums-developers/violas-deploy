@@ -149,6 +149,7 @@ def loopMonitor(IP,processname,servername,log_file,error_file):
                 if num >= len(txt):
                     num=len(txt)
                 for i in range(num):
+                    
                     f.write(result[num-1-i] + "\n")
                 fo.close()
             else:
