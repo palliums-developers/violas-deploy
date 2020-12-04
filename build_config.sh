@@ -5,7 +5,6 @@ sudo apt-get update
 sudo apt-get install -y build-essential
 sudo pip3 install psutil
 
-config_dir_path=`echo $(pwd)`
 read  -p "Please enter the violas tag:" tag
 cd $HOME
 if [ ! -d "violas" ];then
@@ -18,48 +17,55 @@ fi
 source $HOME/.cargo/env
 cargo build --release --all 
 
-#创建配置文件，输入需要创建的节点数量
 cd $HOME
-if [ ! -d "$config_dir_path/config" ]; then
-	mkdir -p  $config_dir_path/config && cd $config_dir_path/config
+if [  -f "violas/target/release/validators.conf" ]; then
+	rm $HOME/violas/target/release/validators.conf
+	touch $HOME/violas/target/release/validators.conf
 else
-while true
-do
-	read -r -p "Are You Sure Delete "$config_dir_path/config"? [Y/n] " input
-	case $input in
-	    [yY][eE][sS]|[yY])
-			rm -rf $config_dir_path/config
-			mkdir -p  $config_dir_path/config && cd $config_dir_path/config
-			break
-			;;
-
-	    [nN][oO]|[nN])
-			echo "Exit compilation, please delete config file manually"
-			exit 1	       	
-			;;
-
-	    *)
-			echo "Invalid input..."
-			;;
-	esac
-done
+	touch $HOME/violas/target/release/validators.conf
 fi
+#创建配置文件，输入需要创建的节点数量
+# cd $HOME
+# if [ ! -d "violas_scripts/config" ]; then
+# 	mkdir -p  violas_scripts/config && cd violas_scripts/config
+# else
+# while true
+# do
+# 	read -r -p "Are You Sure Delete "$HOME/violas_scripts/config"? [Y/n] " input
+# 	case $input in
+# 	    [yY][eE][sS]|[yY])
+# 			rm -rf $HOME/violas_scripts/config
+# 			mkdir -p  violas_scripts/config && cd violas_scripts/config
+# 			break
+# 			;;
+
+# 	    [nN][oO]|[nN])
+# 			echo "Exit compilation, please delete config file manually"
+# 			exit 1	       	
+# 			;;
+
+# 	    *)
+# 			echo "Invalid input..."
+# 			;;
+# 	esac
+# done
+# fi
 #$HOME/violas/target/release/generate-keypair -o faucet_keys
 read  -p "Please Enter The Number of Nodes Created:" num
 read  -p "Please Enter The Primary Node IP:" master_node_ip
 read  -p "Please Enter All Deployed IP,Separated by \",\":" deployed_ip
-randseed=`$config_dir_path/randseed`
-echo $randseed >$config_dir_path/config/seed
-$HOME/violas/target/release/config-builder faucet -o $config_dir_path/config -s $randseed -n $num
-sed -i "s|IP=.*|IP=$master_node_ip|g" $config_dir_path/deploy_node.sh
-sed -i "s|tag=.*|tag=$tag|g" $config_dir_path/deploy_node.sh
-sed -i "s|config_path=.*|config_path=$config_dir_path|g" $config_dir_path/cli.sh
+# randseed=`$HOME/violas_scripts/randseed`
+# echo $randseed >$HOME/violas_scripts/config/seed
+# $HOME/violas/target/release/config-builder faucet -o $HOME/violas_scripts/config -s $randseed -n $num
 
-for i in $(seq 1 $num)
-do
-	i=`expr $i - 1`	
-	$HOME/violas/target/release/config-builder validator -a "/ip4/51.140.241.96/tcp/40002" -b "/ip4/$master_node_ip/tcp/40002" -d $HOME/violascfg/$i  -i $i -l "/ip4/0.0.0.0/tcp/40002" -n $num -o $config_dir_path/config/$i -s $randseed
-done
+sed -i "s|IP=.*|IP=$master_node_ip|g" $HOME/violas_scripts/deploy_node.sh
+# sed -i "s|tag=.*|tag=$tag|g" $HOME/violas_scripts/deploy_node.sh
+
+# for i in $(seq 1 $num)
+# do
+# 	i=`expr $i - 1`	
+# 	$HOME/violas/target/release/config-builder validator -a "/ip4/51.140.241.96/tcp/40002" -b "/ip4/$master_node_ip/tcp/40002" -d $HOME/violascfg/$i  -i $i -l "/ip4/0.0.0.0/tcp/40002" -n $num -o $HOME/violas_scripts/config/$i -s $randseed
+# done
 
 
 cd $HOME/violas/target/release/
@@ -70,24 +76,24 @@ strip libra-node
 cd $HOME
 if [ ! -d "deploy_node" ]; then
 	mkdir -p  deploy_node && cd deploy_node
-	cp $config_dir_path/deploy_node.sh .
-	# cp $config_dir_path/monitor.sh .
-	cp $config_dir_path/clean_db_start.sh .
-	cp $config_dir_path/start.sh .
-	cp $config_dir_path/stop.sh .
-	cp $config_dir_path/cli.sh .
-	cp $config_dir_path/violas_chain_monitor.py .
+	cp $HOME/violas_scripts/deploy_node.sh .
+	# cp $HOME/violas_scripts/monitor.sh .
+	cp $HOME/violas_scripts/clean_db_start.sh .
+	cp $HOME/violas_scripts/start.sh .
+	cp $HOME/violas_scripts/stop.sh .
+	cp $HOME/violas_scripts/cli.sh .
+	cp $HOME/violas_scripts/violas_error_send.py .
 	cp $HOME/violas/target/release/libra-node .
 else
 	rm -rf $HOME/deploy_node
 	mkdir -p deploy_node && cd deploy_node
-	cp $config_dir_path/deploy_node.sh .
-	# cp $config_dir_path/monitor.sh .
-	cp $config_dir_path/clean_db_start.sh .
-	cp $config_dir_path/start.sh .
-	cp $config_dir_path/stop.sh .
-	cp $config_dir_path/cli.sh .
-	cp $config_dir_path/violas_chain_monitor.py .
+	cp $HOME/violas_scripts/deploy_node.sh .
+	# cp $HOME/violas_scripts/monitor.sh .
+	cp $HOME/violas_scripts/clean_db_start.sh .
+	cp $HOME/violas_scripts/start.sh .
+	cp $HOME/violas_scripts/stop.sh .
+	cp $HOME/violas_scripts/cli.sh .
+	cp $HOME/violas_scripts/violas_error_send.py .
 	cp $HOME/violas/target/release/libra-node .
 fi
 
@@ -95,21 +101,35 @@ sleep 3
 # 根据输入的部署IP更新配置文件并修改访问端口为50001
 i=1
 array=(${deployed_ip//,/ })
+
+for ip in ${array[@]}
+do
+	echo /ip4/$ip/tcp/40002 >> $HOME/violas/target/release/validators.conf
+done
+
+cd $HOME/violas/target/release/
+nohup $HOME/violas/target/release/libra-swarm -c $HOME/violascfg --libra-node $HOME/violas/target/release/libra-node -n $num >$HOME/violas_scripts/swarm.log 2>&1 &
+sleep 5
+killall libra-node
+
+cd  $HOME
 for ip in ${array[@]}
 do
 	j=`expr $i - 1`
-	sed -i "s|address: \"0.0.0.0:8080\"|address: \"0.0.0.0:50001\"|g" $config_dir_path/config/$j/node.yaml
-	sed -i "s|advertised_address:.*|advertised_address: \"\/ip4\/$ip\/tcp\/40002\"|g" $config_dir_path/config/$j/node.yaml
-	cd $config_dir_path/config
-	tar -zcf $HOME/deploy_node/$ip.tar.gz  $j
+	sed -i "87s|level:.*|level: ERROR|g" $HOME/violascfg/$j/node.yaml
+	sed -i "106s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/$j/node.yaml
+	# sed -i "s|address: \"0.0.0.0:8080\"|address: \"0.0.0.0:50001\"|g" $HOME/violas_scripts/config/$j/node.yaml
+	# sed -i "s|advertised_address:.*|advertised_address: \"\/ip4\/$ip\/tcp\/40002\"|g" $HOME/violas_scripts/config/$j/node.yaml
+	cd $HOME/violascfg
+	tar -zcf $HOME/deploy_node/$ip.tar.gz  $j/* *$j*
 	let i++
 done
 
 cd  $HOME
-if [  -f "$config_dir_path/config/0/node.yaml" ]; then
+if [  -f "violascfg/0/node.yaml" ]; then
 	echo "********************************************************"
 	echo "Config generated"
-	echo "path:$config_dir_path/config/"
+	echo "path:$HOME/violascfg/"
 	echo "Please run the following command on the deployment server:"
 	echo "curl -O http://$master_node_ip/deploy_node.sh && chmod 775 deploy_node.sh"
 	echo "********************************************************"

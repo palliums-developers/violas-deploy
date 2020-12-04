@@ -6,15 +6,15 @@ sudo apt-get install -y build-essential
 sudo pip3 install psutil
 
 IP=52.151.2.66
-tag=v0.3.0
+# tag=v0.3.0
 
-cd $HOME
-if [ ! -d "violas" ];then
-	git clone https://github.com/palliums-developers/Violas violas
-	cd $HOME/violas && git checkout $tag && ./scripts/dev_setup.sh
-else
-	cd $HOME/violas && git pull origin violas:violas && git checkout $tag && ./scripts/dev_setup.sh
-fi
+# cd $HOME
+# if [ ! -d "violas" ];then
+# 	git clone https://github.com/palliums-developers/Violas violas
+# 	cd $HOME/violas && git checkout $tag && ./scripts/dev_setup.sh
+# else
+# 	cd $HOME/violas && git pull origin violas:violas && git checkout $tag && ./scripts/dev_setup.sh
+# fi
 # sed -i "s|const MAX_GAS_AMOUNT: u64 = 140_000|const MAX_GAS_AMOUNT: u64 = 280_000|g" $HOME/violas/client/cli/src/client_proxy.rs
 # source $HOME/.cargo/env
 # cargo build --release --all
@@ -33,10 +33,10 @@ curl -O -s http://$IP/$node_ip.tar.gz
 tar -zxf $node_ip.tar.gz
 
 # 获取当前目录下所有文件夹名
-filename=`ls -l |awk '/^d/ {print $NF}'`
-cd $filename
-data_dir_path=`echo $(pwd)`
-sed -i "s|data_dir: .*|data_dir: \"$data_dir_path\"|g" $data_dir_path/node.yaml
+# filename=`ls -l |awk '/^d/ {print $NF}'`
+# cd $filename
+# data_dir_path=`echo $(pwd)`
+# sed -i "s|data_dir: .*|data_dir: \"$data_dir_path\"|g" $data_dir_path/node.yaml
 
 #创建监控脚本，每隔5秒检测节点进程是否存在，不存在则重启
 # cd $HOME
