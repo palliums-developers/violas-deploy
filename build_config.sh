@@ -125,7 +125,15 @@ do
 	tar -zcf $HOME/deploy_node/$ip.tar.gz  $j/* *$j*
 	let i++
 done
-cp -R $HOME/violascfg/ $config_dir_path/config
+
+cd $config_dir_path
+if [ ! -d "config" ]; then
+	cp -R $HOME/violascfg/ $config_dir_path/config
+else
+	rm -rf $config_dir_path/config
+	cp -R $HOME/violascfg/ $config_dir_path/config
+fi
+
 cd  $HOME
 if [  -f "violascfg/0/node.yaml" ]; then
 	echo "********************************************************"
