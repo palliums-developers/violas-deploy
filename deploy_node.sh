@@ -2,7 +2,7 @@
 #下载violas并编译
 sudo apt-get install git
 sudo apt-get update
-sudo apt-get install -y build-essential
+#sudo apt-get install -y build-essential
 sudo pip3 install psutil
 
 IP=52.151.2.66
