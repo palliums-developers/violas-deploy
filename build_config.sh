@@ -125,12 +125,12 @@ do
 	tar -zcf $HOME/deploy_node/$ip.tar.gz  $j/* *$j*
 	let i++
 done
-
+cp -R $HOME/violascfg/ $config_dir_path/config
 cd  $HOME
 if [  -f "violascfg/0/node.yaml" ]; then
 	echo "********************************************************"
 	echo "Config generated"
-	echo "path:$HOME/violascfg/"
+	echo "path:$config_dir_path/config/"
 	echo "Please run the following command on the deployment server:"
 	echo "curl -O http://$master_node_ip/deploy_node.sh && chmod 775 deploy_node.sh"
 	echo "********************************************************"
