@@ -5,6 +5,7 @@ sudo apt-get update
 sudo apt-get install -y build-essential
 sudo pip3 install psutil
 
+config_dir_path=`echo $(pwd)`
 read  -p "Please enter the violas tag:" tag
 cd $HOME
 if [ ! -d "violas" ];then
@@ -31,10 +32,10 @@ fi
 # else
 # while true
 # do
-# 	read -r -p "Are You Sure Delete "$HOME/violas_scripts/config"? [Y/n] " input
+# 	read -r -p "Are You Sure Delete "$config_dir_path/config"? [Y/n] " input
 # 	case $input in
 # 	    [yY][eE][sS]|[yY])
-# 			rm -rf $HOME/violas_scripts/config
+# 			rm -rf $config_dir_path/config
 # 			mkdir -p  violas_scripts/config && cd violas_scripts/config
 # 			break
 # 			;;
@@ -54,17 +55,17 @@ fi
 read  -p "Please Enter The Number of Nodes Created:" num
 read  -p "Please Enter The Primary Node IP:" master_node_ip
 read  -p "Please Enter All Deployed IP,Separated by \",\":" deployed_ip
-# randseed=`$HOME/violas_scripts/randseed`
-# echo $randseed >$HOME/violas_scripts/config/seed
-# $HOME/violas/target/release/config-builder faucet -o $HOME/violas_scripts/config -s $randseed -n $num
+# randseed=`$config_dir_path/randseed`
+# echo $randseed >$config_dir_path/config/seed
+# $HOME/violas/target/release/config-builder faucet -o $config_dir_path/config -s $randseed -n $num
 
-sed -i "s|IP=.*|IP=$master_node_ip|g" $HOME/violas_scripts/deploy_node.sh
-# sed -i "s|tag=.*|tag=$tag|g" $HOME/violas_scripts/deploy_node.sh
+sed -i "s|IP=.*|IP=$master_node_ip|g" $config_dir_path/deploy_node.sh
+# sed -i "s|tag=.*|tag=$tag|g" $config_dir_path/deploy_node.sh
 
 # for i in $(seq 1 $num)
 # do
 # 	i=`expr $i - 1`	
-# 	$HOME/violas/target/release/config-builder validator -a "/ip4/51.140.241.96/tcp/40002" -b "/ip4/$master_node_ip/tcp/40002" -d $HOME/violascfg/$i  -i $i -l "/ip4/0.0.0.0/tcp/40002" -n $num -o $HOME/violas_scripts/config/$i -s $randseed
+# 	$HOME/violas/target/release/config-builder validator -a "/ip4/51.140.241.96/tcp/40002" -b "/ip4/$master_node_ip/tcp/40002" -d $HOME/violascfg/$i  -i $i -l "/ip4/0.0.0.0/tcp/40002" -n $num -o $config_dir_path/config/$i -s $randseed
 # done
 
 
@@ -76,24 +77,24 @@ strip libra-node
 cd $HOME
 if [ ! -d "deploy_node" ]; then
 	mkdir -p  deploy_node && cd deploy_node
-	cp $HOME/violas_scripts/deploy_node.sh .
-	# cp $HOME/violas_scripts/monitor.sh .
-	cp $HOME/violas_scripts/clean_db_start.sh .
-	cp $HOME/violas_scripts/start.sh .
-	cp $HOME/violas_scripts/stop.sh .
-	cp $HOME/violas_scripts/cli.sh .
-	cp $HOME/violas_scripts/violas_error_send.py .
+	cp $config_dir_path/deploy_node.sh .
+	# cp $config_dir_path/monitor.sh .
+	cp $config_dir_path/clean_db_start.sh .
+	cp $config_dir_path/start.sh .
+	cp $config_dir_path/stop.sh .
+	cp $config_dir_path/cli.sh .
+	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/libra-node .
 else
 	rm -rf $HOME/deploy_node
 	mkdir -p deploy_node && cd deploy_node
-	cp $HOME/violas_scripts/deploy_node.sh .
-	# cp $HOME/violas_scripts/monitor.sh .
-	cp $HOME/violas_scripts/clean_db_start.sh .
-	cp $HOME/violas_scripts/start.sh .
-	cp $HOME/violas_scripts/stop.sh .
-	cp $HOME/violas_scripts/cli.sh .
-	cp $HOME/violas_scripts/violas_error_send.py .
+	cp $config_dir_path/deploy_node.sh .
+	# cp $config_dir_path/monitor.sh .
+	cp $config_dir_path/clean_db_start.sh .
+	cp $config_dir_path/start.sh .
+	cp $config_dir_path/stop.sh .
+	cp $config_dir_path/cli.sh .
+	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/libra-node .
 fi
 
@@ -108,7 +109,7 @@ do
 done
 
 cd $HOME/violas/target/release/
-nohup $HOME/violas/target/release/libra-swarm -c $HOME/violascfg --libra-node $HOME/violas/target/release/libra-node -n $num >$HOME/violas_scripts/swarm.log 2>&1 &
+nohup $HOME/violas/target/release/libra-swarm -c $HOME/violascfg --libra-node $HOME/violas/target/release/libra-node -n $num >$config_dir_path/swarm.log 2>&1 &
 sleep 5
 killall libra-node
 
@@ -118,8 +119,8 @@ do
 	j=`expr $i - 1`
 	sed -i "87s|level:.*|level: ERROR|g" $HOME/violascfg/$j/node.yaml
 	sed -i "106s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/$j/node.yaml
-	# sed -i "s|address: \"0.0.0.0:8080\"|address: \"0.0.0.0:50001\"|g" $HOME/violas_scripts/config/$j/node.yaml
-	# sed -i "s|advertised_address:.*|advertised_address: \"\/ip4\/$ip\/tcp\/40002\"|g" $HOME/violas_scripts/config/$j/node.yaml
+	# sed -i "s|address: \"0.0.0.0:8080\"|address: \"0.0.0.0:50001\"|g" $config_dir_path/config/$j/node.yaml
+	# sed -i "s|advertised_address:.*|advertised_address: \"\/ip4\/$ip\/tcp\/40002\"|g" $config_dir_path/config/$j/node.yaml
 	cd $HOME/violascfg
 	tar -zcf $HOME/deploy_node/$ip.tar.gz  $j/* *$j*
 	let i++
