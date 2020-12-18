@@ -164,7 +164,7 @@ def loopMonitor(IP,processname,servername,log_file,error_file):
 
 if __name__ == '__main__':
     path = os.path.dirname(os.path.realpath(__file__))
-    processname = "libra-node" #设置进程名称
+    processname = "diem-node" #设置进程名称
     servername= "Violas Chain"   #设置服务名称
     log_file = path + "/violas.log"    #设置日志文件路径
     error_file = path + "/violas_error_log.txt"  #设置发送错误邮件日志路径

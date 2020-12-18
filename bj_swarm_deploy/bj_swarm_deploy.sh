@@ -15,7 +15,7 @@ fi
 source $HOME/.cargo/env
 cargo build --release --all 
 
-nohup $violas_path/libra-swarm -c $violascfg_path --libra-node $violas_path/libra-node -n 1 >$violas_scripts_path/swarm.log 2>&1 &
+nohup $violas_path/diem-swarm -c $violascfg_path --diem-node $violas_path/diem-node -n 1 >$violas_scripts_path/swarm.log 2>&1 &
 
 sleep 3
 cd $violascfg_path
@@ -25,7 +25,7 @@ cp $violas_scripts_path/stop.sh .
 cp $violas_scripts_path/cli.sh .
 cp $violas_scripts_path/clean_db_start.sh .
 cp $violas_scripts_path/violas_chain_monitor.py .
-cp $violas_path/libra-node .
+cp $violas_path/diem-node .
 mv mint.key mint_beijing.key
 
 sed -i "87s|level:.*|level: ERROR|g" $violascfg_path/0/node.yaml
