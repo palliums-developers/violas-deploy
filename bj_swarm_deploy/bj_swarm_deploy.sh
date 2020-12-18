@@ -28,8 +28,8 @@ cp $violas_scripts_path/violas_chain_monitor.py .
 cp $violas_path/diem-node .
 mv mint.key mint_beijing.key
 
-sed -i "87s|level:.*|level: ERROR|g" $violascfg_path/0/node.yaml
-sed -i "106s|address:.*|address: \"0.0.0.0:50001\"|g" $violascfg_path/0/node.yaml
+sed -i "89s|level:.*|level: ERROR|g" $violascfg_path/0/node.yaml
+sed -i "108s|address:.*|address: \"0.0.0.0:50001\"|g" $violascfg_path/0/node.yaml
 
 sh stop.sh
 sleep 2
