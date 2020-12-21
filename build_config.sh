@@ -55,6 +55,7 @@ fi
 read  -p "Please Enter The Number of Nodes Created:" num
 read  -p "Please Enter The Primary Node IP:" master_node_ip
 read  -p "Please Enter All Deployed IP,Separated by \",\":" deployed_ip
+read  -p "Please Enter num-full-nodes:" num-full-nodes
 # randseed=`$config_dir_path/randseed`
 # echo $randseed >$config_dir_path/config/seed
 # $HOME/violas/target/release/config-builder faucet -o $config_dir_path/config -s $randseed -n $num
@@ -109,9 +110,15 @@ do
 done
 
 cd $HOME/violas/target/release/
-nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num >$config_dir_path/swarm.log 2>&1 &
-sleep 5
-killall diem-node
+if [ $num-full-nodes eq 0]; then
+	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num >$config_dir_path/swarm.log 2>&1 &
+	sleep 5
+	killall diem-node
+else
+	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num -f $num-full-nodes>$config_dir_path/swarm.log 2>&1 &
+	sleep 10
+	killall diem-node
+fi
 
 cd  $HOME
 for ip in ${array[@]}
