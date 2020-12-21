@@ -9,7 +9,7 @@ if [ ! -d "violas" ];then
 	git clone https://github.com/palliums-developers/Violas violas
 	cd $HOME/violas && git checkout $tag && ./scripts/dev_setup.sh
 else	
-	cd $HOME/violas && git pull origin violas:violas && git checkout $tag && ./scripts/dev_setup.sh
+	cd $HOME/violas && git checkout violas && git pull origin violas:violas && git checkout $tag && ./scripts/dev_setup.sh
 fi
 # sed -i "s|max_transaction_size_in_bytes: 4096|max_transaction_size_in_bytes: 32768|g" $HOME/violas/language/move-core/types/src/gas_schedule.rs
 source $HOME/.cargo/env
