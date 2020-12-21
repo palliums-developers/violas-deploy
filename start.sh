@@ -2,7 +2,7 @@ cd $HOME/violascfg/
 filename=`ls -l |awk '/^d/ {print $NF}'`
 cd $filename
 data_dir_path=`echo $(pwd)`
-violaspro="libra-node"
+violaspro="diem-node"
 pythonpro="violas_chain_monitor.py"
 logfile="$HOME/violascfg/violas.log"
 split_line="*************************************************************"
@@ -14,7 +14,7 @@ if [ $ViolasPPID -eq 0 ]
 	echo "$split_line">>$logfile
 	echo "`date "+%Y-%m-%d %H:%M:%S"` :violas is starting" >>$logfile
 	echo "$split_line">>$logfile
-	nohup $HOME/violascfg/libra-node  -f $data_dir_path/node.yaml >>$logfile 2>&1 &
+	nohup $HOME/violascfg/diem-node  -f $data_dir_path/node.yaml >>$logfile 2>&1 &
 	sleep 3
 	CurrentViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 	if [ $CurrentViolasPPID -ne 0 ]

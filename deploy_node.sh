@@ -82,13 +82,13 @@ fi
 # 	sudo chmod 775 $HOME/violascfg/update_node.sh
 # fi
 
-if [  -f "violascfg/libra-node" ]; then
-	sudo rm $HOME/violascfg/libra-node
-	cd  $HOME/violascfg && curl -O -s http://$IP/libra-node
-	sudo chmod 775 $HOME/violascfg/libra-node
+if [  -f "violascfg/diem-node" ]; then
+	sudo rm $HOME/violascfg/diem-node
+	cd  $HOME/violascfg && curl -O -s http://$IP/diem-node
+	sudo chmod 775 $HOME/violascfg/diem-node
 else
-	cd  $HOME/violascfg && curl -O -s http://$IP/libra-node
-	sudo chmod 775 $HOME/violascfg/libra-node
+	cd  $HOME/violascfg && curl -O -s http://$IP/diem-node
+	sudo chmod 775 $HOME/violascfg/diem-node
 fi
 
 if [  "$node_ip" = "$IP" ]; then
@@ -112,10 +112,10 @@ else
 fi
 
 sh $HOME/violascfg/start.sh
-# `nohup $HOME/violascfg/libra-node  -f $data_dir_path/node.yaml >$HOME/violascfg/violas.log 2>&1 &`
+# `nohup $HOME/violascfg/diem-node  -f $data_dir_path/node.yaml >$HOME/violascfg/violas.log 2>&1 &`
 # `nohup python3 violas_error_send.py >$HOME/violascfg/violas_error_send.log 2>&1 &`
 sleep 5
-ps -fe|grep libra-node |grep -v grep
+ps -fe|grep diem-node |grep -v grep
 if [ $? -ne 0 ]
 	then
 	cat $HOME/violascfg/violas.log

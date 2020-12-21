@@ -70,7 +70,7 @@ sed -i "s|IP=.*|IP=$master_node_ip|g" $config_dir_path/deploy_node.sh
 
 
 cd $HOME/violas/target/release/
-strip libra-node
+strip diem-node
 
 
 #将配置文件以及部署脚本打包
@@ -84,7 +84,7 @@ if [ ! -d "deploy_node" ]; then
 	cp $config_dir_path/stop.sh .
 	cp $config_dir_path/cli.sh .
 	cp $config_dir_path/violas_chain_monitor.py .
-	cp $HOME/violas/target/release/libra-node .
+	cp $HOME/violas/target/release/diem-node .
 else
 	rm -rf $HOME/deploy_node
 	mkdir -p deploy_node && cd deploy_node
@@ -95,7 +95,7 @@ else
 	cp $config_dir_path/stop.sh .
 	cp $config_dir_path/cli.sh .
 	cp $config_dir_path/violas_chain_monitor.py .
-	cp $HOME/violas/target/release/libra-node .
+	cp $HOME/violas/target/release/diem-node .
 fi
 
 sleep 3
@@ -109,9 +109,9 @@ do
 done
 
 cd $HOME/violas/target/release/
-nohup $HOME/violas/target/release/libra-swarm -c $HOME/violascfg --libra-node $HOME/violas/target/release/libra-node -n $num >$config_dir_path/swarm.log 2>&1 &
+nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num >$config_dir_path/swarm.log 2>&1 &
 sleep 5
-killall libra-node
+killall diem-node
 
 cd  $HOME
 for ip in ${array[@]}
