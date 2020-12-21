@@ -110,7 +110,7 @@ do
 done
 
 cd $HOME/violas/target/release/
-if [ $num-full-nodes eq 0 ]; then
+if [ $num_full_nodes eq 0 ]; then
 	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num >$config_dir_path/swarm.log 2>&1 &
 	sleep 5
 	killall diem-node
