@@ -126,6 +126,7 @@ do
 	j=`expr $i - 1`
 	sed -i "89s|level:.*|level: ERROR|g" $HOME/violascfg/$j/node.yaml
 	sed -i "108s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/$j/node.yaml
+	sed -i "72s|listen_address:.*|listen_address: /ip4/0.0.0.0/tcp/40013|g" $HOME/violascfg/$j/node.yaml
 	# sed -i "s|address: \"0.0.0.0:8080\"|address: \"0.0.0.0:50001\"|g" $config_dir_path/config/$j/node.yaml
 	# sed -i "s|advertised_address:.*|advertised_address: \"\/ip4\/$ip\/tcp\/40002\"|g" $config_dir_path/config/$j/node.yaml
 	cd $HOME/violascfg
