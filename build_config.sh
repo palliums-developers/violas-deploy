@@ -53,9 +53,11 @@ fi
 # fi
 #$HOME/violas/target/release/generate-keypair -o faucet_keys
 read  -p "Please Enter The Number of Nodes Created:" num
-read  -p "Please Enter The Primary Node IP:" master_node_ip
-read  -p "Please Enter All Deployed IP,Separated by \",\":" deployed_ip
 read  -p "Please Enter num-full-nodes:" num_full_nodes
+read  -p "Please Enter The Primary Node IP:" master_node_ip
+read  -p "Please Enter All Validators IP,Separated by \",\":" validators_ip
+read  -p "Please Enter All Full_nodes IP,Separated by \",\":" full_nodes_ip
+
 # randseed=`$config_dir_path/randseed`
 # echo $randseed >$config_dir_path/config/seed
 # $HOME/violas/target/release/config-builder faucet -o $config_dir_path/config -s $randseed -n $num
@@ -100,15 +102,17 @@ else
 fi
 
 sleep 3
-# 根据输入的部署IP更新配置文件并修改访问端口为50001
-i=1
-array=(${deployed_ip//,/ })
 
-for ip in ${array[@]}
+# 根据输入验证节点IP生成validators.conf
+i=1
+validators_array=(${validators_ip//,/ })
+
+for ip in ${validators_array[@]}
 do
 	echo /ip4/$ip/tcp/40002 >> $HOME/violas/target/release/validators.conf
 done
 
+# 根据输入的num_full_nodes判断生成验证节点或全节点配置文件，num_full_nodes为0时只生成验证节点配置文件
 cd $HOME/violas/target/release/
 if [ $num_full_nodes -eq 0 ]; then
 	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num >$config_dir_path/swarm.log 2>&1 &
@@ -120,8 +124,9 @@ else
 	killall diem-node
 fi
 
+# 修改validator节点配置文件端口并打包
 cd  $HOME
-for ip in ${array[@]}
+for ip in ${validators_array[@]}
 do
 	j=`expr $i - 1`
 	sed -i "89s|level:.*|level: ERROR|g" $HOME/violascfg/$j/node.yaml
@@ -130,9 +135,23 @@ do
 	# sed -i "s|address: \"0.0.0.0:8080\"|address: \"0.0.0.0:50001\"|g" $config_dir_path/config/$j/node.yaml
 	# sed -i "s|advertised_address:.*|advertised_address: \"\/ip4\/$ip\/tcp\/40002\"|g" $config_dir_path/config/$j/node.yaml
 	cd $HOME/violascfg
-	tar -zcf $HOME/deploy_node/$ip.tar.gz  $j/* *$j*
+	tar -zcf $HOME/deploy_node/$ip_validator_node.tar.gz  $j/* *$j*
 	let i++
 done
+
+# 修改full_nodes节点配置文件端口并打包
+full_nodes_array=(${full_nodes_ip//,/ })
+cd  $HOME
+for ip in ${full_nodes_array[@]}
+do
+	j=`expr $i - 1`
+	sed -i "99s|^.*ln-noise-ik|- /ip4/${validators_array[j]}/tcp/40013/ln-noise-ik|g" $HOME/violascfg/full_nodes/$j/node.yaml
+	sed -i "154s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/full_nodes/$j/node.yaml
+	cd $HOME/violascfg
+	tar -zcf $HOME/deploy_node/$ip_full_node.tar.gz  full_nodes/$j/* safety-rules_$j* safety-rules_$j*
+	let i++
+done
+
 
 cd $config_dir_path
 if [ ! -d "config" ]; then

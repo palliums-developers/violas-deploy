@@ -29,8 +29,8 @@ else
 	rm -rf $HOME/violascfg
 	mkdir -p violascfg && cd violascfg
 fi
-curl -O -s http://$IP/$node_ip.tar.gz
-tar -zxf $node_ip.tar.gz
+curl -O -s http://$IP/$node_ip_validator_node.tar.gz
+tar -zxf $$node_ip_validator_node.tar.gz
 
 # 获取当前目录下所有文件夹名
 # filename=`ls -l |awk '/^d/ {print $NF}'`
