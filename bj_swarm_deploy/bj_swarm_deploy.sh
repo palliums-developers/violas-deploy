@@ -18,7 +18,7 @@ cargo build --release --all
 nohup $violas_path/diem-swarm -c $violascfg_path --diem-node $violas_path/diem-node -n 1 >$violas_scripts_path/swarm.log 2>&1 &
 
 sleep 3
-if [ ! -d "$violascfg_path" ]; then
+if [ -d "$violascfg_path" ]; then
 	cd $violascfg_path
 	rm -rf $violascfg_path/logs
 	cp $violas_scripts_path/start.sh .
