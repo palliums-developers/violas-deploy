@@ -127,7 +127,7 @@ fi
 
 # 修改validator节点配置文件端口并打包
 cd  $HOME
-for ip in ${validators_array[@]}
+for ip_validator_node in ${validators_array[@]}
 do
 	j=`expr $i - 1`
 	sed -i "89s|level:.*|level: ERROR|g" $HOME/violascfg/$j/node.yaml
@@ -144,7 +144,7 @@ done
 i=1
 full_nodes_array=(${full_nodes_ip//,/ })
 cd  $HOME
-for ip in ${full_nodes_array[@]}
+for ip_full_node in ${full_nodes_array[@]}
 do
 	j=`expr $i - 1`
 	sed -i "99s|^.*ln-noise-ik|- /ip4/${validators_array[j]}/tcp/40013/ln-noise-ik|g" $HOME/violascfg/full_nodes/$j/node.yaml
