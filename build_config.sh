@@ -80,8 +80,8 @@ strip diem-node
 cd $HOME
 if [ ! -d "deploy_node" ]; then
 	mkdir -p  deploy_node && cd deploy_node
-	cp $config_dir_path/deploy_node.sh .
-	# cp $config_dir_path/monitor.sh .
+	cp $config_dir_path/deploy_validator_node.sh .
+	cp $config_dir_path/deploy_full_node.sh .
 	cp $config_dir_path/clean_db_start.sh .
 	cp $config_dir_path/start.sh .
 	cp $config_dir_path/stop.sh .
@@ -91,8 +91,8 @@ if [ ! -d "deploy_node" ]; then
 else
 	rm -rf $HOME/deploy_node
 	mkdir -p deploy_node && cd deploy_node
-	cp $config_dir_path/deploy_node.sh .
-	# cp $config_dir_path/monitor.sh .
+	cp $config_dir_path/deploy_validator_node.sh .
+	cp $config_dir_path/deploy_full_node.sh .
 	cp $config_dir_path/clean_db_start.sh .
 	cp $config_dir_path/start.sh .
 	cp $config_dir_path/stop.sh .
@@ -140,6 +140,7 @@ do
 done
 
 # 修改full_nodes节点配置文件端口并打包
+i=1
 full_nodes_array=(${full_nodes_ip//,/ })
 cd  $HOME
 for ip in ${full_nodes_array[@]}
