@@ -20,7 +20,7 @@ IP=52.151.2.66
 # cargo build --release --all
 
 #根据输入的ip地址下载对应的节点配置文件
-read  -p "Please enter the IP address:" node_ip
+read  -p "Please enter the IP address:" node_ip_validator_node
 
 cd $HOME
 if [ ! -d "violascfg" ]; then
@@ -30,7 +30,7 @@ else
 	mkdir -p violascfg && cd violascfg
 fi
 curl -O -s http://$IP/$node_ip_validator_node.tar.gz
-tar -zxf $$node_ip_validator_node.tar.gz
+tar -zxf $node_ip_validator_node.tar.gz
 
 # 获取当前目录下所有文件夹名
 # filename=`ls -l |awk '/^d/ {print $NF}'`

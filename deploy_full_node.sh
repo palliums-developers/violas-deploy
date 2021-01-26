@@ -20,7 +20,7 @@ IP=52.151.2.66
 # cargo build --release --all
 
 #根据输入的ip地址下载对应的节点配置文件
-read  -p "Please enter the IP address:" node_ip
+read  -p "Please enter the IP address:" node_ip_full_node
 
 cd $HOME
 if [ ! -d "violascfg" ]; then
