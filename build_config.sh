@@ -149,6 +149,7 @@ do
 	j=`expr $i - 1`
 	sed -i "99s|^.*ln-noise-ik|- /ip4/${validators_array[j]}/tcp/40013/ln-noise-ik|g" $HOME/violascfg/full_nodes/$j/node.yaml
 	sed -i "154s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/full_nodes/$j/node.yaml
+	sed -i "135s|level:.*|level: ERROR|g" $HOME/violascfg/full_nodes/$j/node.yaml
 	cd $HOME/violascfg
 	tar -zcf $HOME/deploy_node/$ip_full_node.tar.gz  full_nodes/$j/* safety-rules_$j* safety-rules_$j*
 	let i++
