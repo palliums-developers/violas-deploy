@@ -88,6 +88,7 @@ if [ ! -d "deploy_node" ]; then
 	cp $config_dir_path/start.sh .
 	cp $config_dir_path/stop.sh .
 	cp $config_dir_path/cli.sh .
+	cp $config_dir_path/full_node_cli.sh .
 	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/diem-node .
 else
@@ -99,6 +100,7 @@ else
 	cp $config_dir_path/start.sh .
 	cp $config_dir_path/stop.sh .
 	cp $config_dir_path/cli.sh .
+	cp $config_dir_path/full_node_cli.sh .
 	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/diem-node .
 fi
@@ -148,7 +150,7 @@ cd  $HOME
 for ip_full_node in ${full_nodes_array[@]}
 do
 	j=`expr $i - 1`
-	sed -i "99s|^.*ln-noise-ik|- /ip4/${validators_array[j]}/tcp/40013/ln-noise-ik|g" $HOME/violascfg/full_nodes/$j/node.yaml
+	sed -i "99s|-.*ln-noise-ik|        - /ip4/${validators_array[j]}/tcp/40013/ln-noise-ik|g" $HOME/violascfg/full_nodes/$j/node.yaml
 	sed -i "154s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/full_nodes/$j/node.yaml
 	sed -i "135s|level:.*|level: ERROR|g" $HOME/violascfg/full_nodes/$j/node.yaml
 	cd $HOME/violascfg
