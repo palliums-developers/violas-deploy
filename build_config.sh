@@ -75,6 +75,7 @@ sed -i "s|IP=.*|IP=$master_node_ip|g" $config_dir_path/deploy_full_node.sh
 
 cd $HOME/violas/target/release/
 strip diem-node
+strip cli
 
 
 #将配置文件以及部署脚本打包
@@ -151,7 +152,7 @@ do
 	sed -i "154s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/full_nodes/$j/node.yaml
 	sed -i "135s|level:.*|level: ERROR|g" $HOME/violascfg/full_nodes/$j/node.yaml
 	cd $HOME/violascfg
-	tar -zcf $HOME/deploy_node/$ip_full_node.tar.gz  full_nodes/$j/* safety-rules_$j* safety-rules_$j*
+	tar -zcf $HOME/deploy_node/$ip_full_node.tar.gz  full_nodes/$j/* safety-rules_$j* full_node_$j* $HOME/violas/target/release/cli $HOME/violascfg/mint.key
 	let i++
 done
 
