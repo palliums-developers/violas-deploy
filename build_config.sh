@@ -91,6 +91,7 @@ if [ ! -d "deploy_node" ]; then
 	cp $config_dir_path/full_node_cli.sh .
 	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/diem-node .
+	cp $HOME/violas/target/release/cli .
 else
 	rm -rf $HOME/deploy_node
 	mkdir -p deploy_node && cd deploy_node
@@ -103,6 +104,7 @@ else
 	cp $config_dir_path/full_node_cli.sh .
 	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/diem-node .
+	cp $HOME/violas/target/release/cli .
 fi
 
 sleep 3
@@ -154,7 +156,7 @@ do
 	sed -i "154s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/full_nodes/$j/node.yaml
 	sed -i "135s|level:.*|level: ERROR|g" $HOME/violascfg/full_nodes/$j/node.yaml
 	cd $HOME/violascfg
-	tar -zcf $HOME/deploy_node/$ip_full_node.tar.gz  full_nodes/$j/* safety-rules_$j* full_node_$j* $HOME/violas/target/release/cli $HOME/violascfg/mint.key
+	tar -zcf $HOME/deploy_node/$ip_full_node.tar.gz  full_nodes/$j/* safety-rules_$j* full_node_$j*
 	let i++
 done
 
@@ -173,7 +175,8 @@ if [  -f "violascfg/0/node.yaml" ]; then
 	echo "Config generated"
 	echo "path:$config_dir_path/config/"
 	echo "Please run the following command on the deployment server:"
-	echo "curl -O http://$master_node_ip/deploy_node.sh && chmod 775 deploy_node.sh"
+	echo "curl -O http://$master_node_ip/deploy_validator_node.sh && chmod 775 deploy_validator_node.sh"
+	echo "curl -O http://$master_node_ip/deploy_full_node.sh && chmod 775 deploy_full_node.sh"
 	echo "********************************************************"
 else
 	echo "********************************************************"

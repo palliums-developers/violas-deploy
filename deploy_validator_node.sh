@@ -91,16 +91,25 @@ else
 	sudo chmod 775 $HOME/violascfg/diem-node
 fi
 
-if [  "$node_ip_validator_node" = "$IP" ]; then
-	if [  -f "violascfg/cli.sh" ]; then
-		sudo rm $HOME/violascfg/cli.sh
-		cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
-		sudo chmod 775 $HOME/violascfg/cli.sh
-	else
-		cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
-		sudo chmod 775 $HOME/violascfg/cli.sh
-	fi
+if [  -f "violascfg/cli" ]; then
+	sudo rm $HOME/violascfg/cli
+	cd  $HOME/violascfg && curl -O -s http://$IP/cli
+	sudo chmod 775 $HOME/violascfg/cli
+else
+	cd  $HOME/violascfg && curl -O -s http://$IP/cli
+	sudo chmod 775 $HOME/violascfg/cli
 fi
+
+#if [  "$node_ip_validator_node" = "$IP" ]; then
+if [  -f "violascfg/cli.sh" ]; then
+	sudo rm $HOME/violascfg/cli.sh
+	cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
+	sudo chmod 775 $HOME/violascfg/cli.sh
+else
+	cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
+	sudo chmod 775 $HOME/violascfg/cli.sh
+fi
+#fi
 
 if [  -f "violascfg/violas_error_send.py" ]; then
 	sudo rm $HOME/violascfg/violas_error_send.py

@@ -95,6 +95,15 @@ else
 	sudo chmod 775 $HOME/violascfg/diem-node
 fi
 
+if [  -f "violascfg/cli" ]; then
+	sudo rm $HOME/violascfg/cli
+	cd  $HOME/violascfg && curl -O -s http://$IP/cli
+	sudo chmod 775 $HOME/violascfg/cli
+else
+	cd  $HOME/violascfg && curl -O -s http://$IP/cli
+	sudo chmod 775 $HOME/violascfg/cli
+fi
+
 if [  -f "violascfg/full_node_cli.sh" ]; then
 	sudo rm $HOME/violascfg/full_node_cli.sh
 	cd  $HOME/violascfg && curl -O -s http://$IP/full_node_cli.sh
