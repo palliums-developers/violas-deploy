@@ -95,13 +95,13 @@ else
 	sudo chmod 775 $HOME/violascfg/diem-node
 fi
 
-if [  -f "violascfg/cli.sh" ]; then
-	sudo rm $HOME/violascfg/cli.sh
-	cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
-	sudo chmod 775 $HOME/violascfg/cli.sh
+if [  -f "violascfg/full_node_cli.sh" ]; then
+	sudo rm $HOME/violascfg/full_node_cli.sh
+	cd  $HOME/violascfg && curl -O -s http://$IP/full_node_cli.sh
+	sudo chmod 775 $HOME/violascfg/full_node_cli.sh
 else
-	cd  $HOME/violascfg && curl -O -s http://$IP/cli.sh
-	sudo chmod 775 $HOME/violascfg/cli.sh
+	cd  $HOME/violascfg && curl -O -s http://$IP/full_node_cli.sh
+	sudo chmod 775 $HOME/violascfg/full_node_cli.sh
 fi
 
 if [  -f "violascfg/violas_error_send.py" ]; then
