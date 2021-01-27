@@ -110,7 +110,6 @@ fi
 sleep 3
 
 # 根据输入验证节点IP生成validators.conf
-i=1
 validators_array=(${validators_ip//,/ })
 
 for ip in ${validators_array[@]}
@@ -122,7 +121,7 @@ done
 cd $HOME/violas/target/release/
 if [ $num_full_nodes -eq 0 ]; then
 	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num >$config_dir_path/swarm.log 2>&1 &
-	sleep 5
+	sleep 10
 	killall diem-node
 else
 	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num -f $num_full_nodes >$config_dir_path/swarm.log 2>&1 &
@@ -131,6 +130,7 @@ else
 fi
 
 # 修改validator节点配置文件端口并打包
+i=1
 cd  $HOME
 for ip_validator_node in ${validators_array[@]}
 do
@@ -146,19 +146,21 @@ do
 done
 
 # 修改full_nodes节点配置文件端口并打包
-i=1
-full_nodes_array=(${full_nodes_ip//,/ })
-cd  $HOME
-for ip_full_node in ${full_nodes_array[@]}
-do
-	j=`expr $i - 1`
-	sed -i "99s|-.*ln-noise-ik|- /ip4/${validators_array[j]}/tcp/40013/ln-noise-ik|g" $HOME/violascfg/full_nodes/$j/node.yaml
-	sed -i "154s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/full_nodes/$j/node.yaml
-	sed -i "135s|level:.*|level: ERROR|g" $HOME/violascfg/full_nodes/$j/node.yaml
-	cd $HOME/violascfg
-	tar -zcf $HOME/deploy_node/$ip_full_node.tar.gz  full_nodes/$j/* safety-rules_$j* full_node_$j*
-	let i++
-done
+if [ $num_full_nodes -ne 0 ]; then
+	i=1
+	full_nodes_array=(${full_nodes_ip//,/ })
+	cd  $HOME
+	for ip_full_node in ${full_nodes_array[@]}
+	do
+		j=`expr $i - 1`
+		sed -i "99s|-.*ln-noise-ik|- /ip4/${validators_array[j]}/tcp/40013/ln-noise-ik|g" $HOME/violascfg/full_nodes/$j/node.yaml
+		sed -i "154s|address:.*|address: \"0.0.0.0:50001\"|g" $HOME/violascfg/full_nodes/$j/node.yaml
+		sed -i "135s|level:.*|level: ERROR|g" $HOME/violascfg/full_nodes/$j/node.yaml
+		cd $HOME/violascfg
+		tar -zcf $HOME/deploy_node/$ip_full_node.tar.gz  full_nodes/$j/* safety-rules_$j* full_node_$j*
+		let i++
+	done
+fi
 
 
 cd $config_dir_path
