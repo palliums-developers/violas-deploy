@@ -25,7 +25,7 @@ if [ $ViolasPPID -eq 0 ]
 		echo "`date "+%Y-%m-%d %H:%M:%S"`: violas start success"
 	else
 		echo "`date "+%Y-%m-%d %H:%M:%S"`: violas start failed"
-		echo "`cat $logfile`"
+		echo "`cat $logfile | tail -n 100`"
 	fi
 else
 	echo "`date "+%Y-%m-%d %H:%M:%S"`: violas process already exist"
@@ -52,7 +52,7 @@ if [ $PythonPPID -eq 0 ]
 		echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro start success"
 	else
 		echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro start failed"
-		echo "`cat $logfile`"
+		echo "`cat $logfile | tail -n 100`"
 	fi
 else
 	echo "`date "+%Y-%m-%d %H:%M:%S"`: $pythonpro process already exist"
