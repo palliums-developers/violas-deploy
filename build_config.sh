@@ -51,7 +51,7 @@ read  -p "Please Enter num-full-nodes:" num_full_nodes
 read  -p "Please Enter The Primary Node IP:" master_node_ip
 read  -p "Please Enter All Validators IP,Separated by \",\":" validators_ip
 read  -p "Please Enter All Full_nodes IP,Separated by \",\":" full_nodes_ip
-
+read  -p "Please Enter chianID:" chain_id
 # randseed=`$config_dir_path/randseed`
 # echo $randseed >$config_dir_path/config/seed
 # $HOME/violas/target/release/config-builder faucet -o $config_dir_path/config -s $randseed -n $num
@@ -109,12 +109,12 @@ if [  -f "violas/target/release/genesis.yaml" ]; then
 	rm $HOME/violas/target/release/genesis.yaml
 	touch $HOME/violas/target/release/genesis.yaml
 	echo "---" >> $HOME/violas/target/release/genesis.yaml
-	echo "chain_id: 5" >> $HOME/violas/target/release/genesis.yaml
+	echo "chain_id: $chain_id" >> $HOME/violas/target/release/genesis.yaml
 	echo "validators:" >> $HOME/violas/target/release/genesis.yaml
 else
 	touch $HOME/violas/target/release/genesis.yaml
 	echo "---" >> $HOME/violas/target/release/genesis.yaml
-	echo "chain_id: 5" >> $HOME/violas/target/release/genesis.yaml
+	echo "chain_id: $chain_id" >> $HOME/violas/target/release/genesis.yaml
 	echo "validators:" >> $HOME/violas/target/release/genesis.yaml
 fi
 
