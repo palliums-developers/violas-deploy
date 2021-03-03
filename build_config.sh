@@ -18,13 +18,7 @@ fi
 source $HOME/.cargo/env
 cargo build --release --all 
 
-cd $HOME
-if [  -f "violas/target/release/validators.conf" ]; then
-	rm $HOME/violas/target/release/validators.conf
-	touch $HOME/violas/target/release/validators.conf
-else
-	touch $HOME/violas/target/release/validators.conf
-fi
+
 #创建配置文件，输入需要创建的节点数量
 # cd $HOME
 # if [ ! -d "violas_scripts/config" ]; then
@@ -109,12 +103,27 @@ fi
 
 sleep 3
 
+
+cd $HOME
+if [  -f "violas/target/release/genesis.yaml" ]; then
+	rm $HOME/violas/target/release/genesis.yaml
+	touch $HOME/violas/target/release/genesis.yaml
+	echo "---" >> $HOME/violas/target/release/genesis.yaml
+	echo "chain_id: 5" >> $HOME/violas/target/release/genesis.yaml
+	echo "validators:" >> $HOME/violas/target/release/genesis.yaml
+else
+	touch $HOME/violas/target/release/genesis.yaml
+	echo "---" >> $HOME/violas/target/release/genesis.yaml
+	echo "chain_id: 5" >> $HOME/violas/target/release/genesis.yaml
+	echo "validators:" >> $HOME/violas/target/release/genesis.yaml
+fi
+
 # 根据输入验证节点IP生成validators.conf
 validators_array=(${validators_ip//,/ })
 
 for ip in ${validators_array[@]}
 do
-	echo /ip4/$ip/tcp/40002 >> $HOME/violas/target/release/validators.conf
+	echo " - /ip4/$ip/tcp/40002" >> $HOME/violas/target/release/genesis.yaml
 done
 
 # 根据输入的num_full_nodes判断生成验证节点或全节点配置文件，num_full_nodes为0时只生成验证节点配置文件

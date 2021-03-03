@@ -1,10 +1,13 @@
-cd $HOME/violascfg/
-filename=`ls -l |awk '/^d/ {print $NF}'`
-cd $filename
+sudo pip3 install psutil
+script_path=`echo $(pwd)`
+cd $script_path
+data_dir=`ls -l |awk '/^d/ {print $NF}'`
+cd $data_dir
 data_dir_path=`echo $(pwd)`
+
 violaspro="diem-node"
 pythonpro="violas_chain_monitor.py"
-logfile="$HOME/violascfg/violas.log"
+logfile="$script_path/violas.log"
 split_line="*************************************************************"
 
 #启动violas链
@@ -14,7 +17,7 @@ if [ $ViolasPPID -eq 0 ]
 	echo "$split_line">>$logfile
 	echo "`date "+%Y-%m-%d %H:%M:%S"` :violas is starting" >>$logfile
 	echo "$split_line">>$logfile
-	nohup $HOME/violascfg/diem-node  -f $data_dir_path/node.yaml >>$logfile 2>&1 &
+	nohup $script_path/diem-node  -f $data_dir_path/node.yaml >>$logfile 2>&1 &
 	sleep 3
 	CurrentViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 	if [ $CurrentViolasPPID -ne 0 ]
