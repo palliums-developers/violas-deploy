@@ -1,4 +1,3 @@
-sudo pip3 install psutil
 script_path=`echo $(pwd)`
 cd $script_path
 data_dir=`ls -l |awk '/^d/ {print $NF}'`

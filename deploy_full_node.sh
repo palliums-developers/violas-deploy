@@ -59,12 +59,12 @@ if [  -f "violascfg/start.sh" ]; then
 	sudo rm $HOME/violascfg/start.sh
 	cd  $HOME/violascfg && curl -O -s http://$IP/start.sh
 	sudo chmod 775 $HOME/violascfg/start.sh
-	sed -i "1s|cd.*|cd \$HOME/violascfg/full_nodes/|g" $HOME/violascfg/start.sh
+	sed -i "2s|cd.*|cd \$script_path/full_nodes/|g" $HOME/violascfg/start.sh
 	sed -i "39s|cd.*|cd \$(dirname \$(dirname \$data_dir_path))|g" $HOME/violascfg/start.sh
 else
 	cd  $HOME/violascfg && curl -O -s http://$IP/start.sh
 	sudo chmod 775 $HOME/violascfg/start.sh
-	sed -i "1s|cd.*|cd \$HOME/violascfg/full_nodes/|g" $HOME/violascfg/start.sh
+	sed -i "2s|cd.*|cd \$script_path/full_nodes/|g" $HOME/violascfg/start.sh
 	sed -i "39s|cd.*|cd \$(dirname \$(dirname \$data_dir_path))|g" $HOME/violascfg/start.sh
 fi
 
