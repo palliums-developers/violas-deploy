@@ -15,6 +15,7 @@ fi
 source $HOME/.cargo/env
 cargo build --release --all 
 
+cd $HOME/violas/target/release/
 strip diem-node
 strip cli
 
