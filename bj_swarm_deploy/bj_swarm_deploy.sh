@@ -15,6 +15,9 @@ fi
 source $HOME/.cargo/env
 cargo build --release --all 
 
+strip diem-node
+strip cli
+
 touch $HOME/violas/target/release/genesis.yaml
 echo "---" >> $HOME/violas/target/release/genesis.yaml
 echo "chain_id: 4" >> $HOME/violas/target/release/genesis.yaml
@@ -33,6 +36,7 @@ if [ -d "$violascfg_path" ]; then
 	cp $violas_scripts_path/clean_db_start.sh .
 	cp $violas_scripts_path/violas_chain_monitor.py .
 	cp $violas_path/diem-node .
+	cp $violas_path/cli .
 	mv mint.key mint_beijing.key
 	sed -i "89s|level:.*|level: ERROR|g" $violascfg_path/0/node.yaml
 	sed -i "108s|address:.*|address: \"0.0.0.0:50001\"|g" $violascfg_path/0/node.yaml
