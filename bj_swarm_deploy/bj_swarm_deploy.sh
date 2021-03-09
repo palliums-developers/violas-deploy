@@ -19,11 +19,21 @@ cd $HOME/violas/target/release/
 strip diem-node
 strip cli
 
-touch $HOME/violas/target/release/genesis.yaml
-echo "---" >> $HOME/violas/target/release/genesis.yaml
-echo "chain_id: 4" >> $HOME/violas/target/release/genesis.yaml
-echo "validators:" >> $HOME/violas/target/release/genesis.yaml
-echo " - /ip4/47.93.114.230/tcp/40002" >> $HOME/violas/target/release/genesis.yaml
+if [  -f "violas/target/release/genesis.yaml" ]; then
+	rm $HOME/violas/target/release/genesis.yaml
+	touch $HOME/violas/target/release/genesis.yaml
+	echo "---" >> $HOME/violas/target/release/genesis.yaml
+	echo "chain_id: 4" >> $HOME/violas/target/release/genesis.yaml
+	echo "validators:" >> $HOME/violas/target/release/genesis.yaml
+	echo " - /ip4/47.93.114.230/tcp/40002" >> $HOME/violas/target/release/genesis.yaml
+else
+	touch $HOME/violas/target/release/genesis.yaml
+	echo "---" >> $HOME/violas/target/release/genesis.yaml
+	echo "chain_id: 4" >> $HOME/violas/target/release/genesis.yaml
+	echo "validators:" >> $HOME/violas/target/release/genesis.yaml
+	echo " - /ip4/47.93.114.230/tcp/40002" >> $HOME/violas/target/release/genesis.yaml
+fi
+
 
 nohup $violas_path/diem-swarm -c $violascfg_path --diem-node $violas_path/diem-node -n 1 >$violas_scripts_path/swarm.log 2>&1 &
 
