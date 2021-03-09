@@ -37,7 +37,7 @@ fi
 # if [ -f "violas_error_log.txt" ]; then
 # 	rm $HOME/violascfg/violas_error_log.txt
 # fi
-
+cd $HOME
 if [  -f "violas/target/release/genesis.yaml" ]; then
         rm $HOME/violas/target/release/genesis.yaml
         touch $HOME/violas/target/release/genesis.yaml
