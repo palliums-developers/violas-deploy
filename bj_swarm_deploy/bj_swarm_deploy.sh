@@ -19,6 +19,7 @@ cd $HOME/violas/target/release/
 strip diem-node
 strip cli
 
+cd $HOME
 if [  -f "violas/target/release/genesis.yaml" ]; then
 	rm $HOME/violas/target/release/genesis.yaml
 	touch $HOME/violas/target/release/genesis.yaml
