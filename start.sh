@@ -3,8 +3,6 @@ cd $script_path
 data_dir=`ls -l |awk '/^d/ {print $NF}'`
 cd $data_dir
 data_dir_path=`echo $(pwd)`
-sed -i "s|path:.*/violascfg|path: $(dirname $script_path)/violascfg|g" $data_dir_path/node.yaml
-sed -i "s|data_dir:.*|data_dir: $data_dir_path|g" $data_dir_path/node.yaml
 
 violaspro="diem-node"
 pythonpro="violas_chain_monitor.py"
@@ -40,7 +38,7 @@ sleep 3
 PythonPPID=`ps -ef | grep $pythonpro | grep -v grep | wc -l`
 if [ $PythonPPID -eq 0 ]
 	then
-	cd $(dirname $data_dir_path)
+	cd $script_path
 	CurrentViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 	if [ $CurrentViolasPPID -ne 0 ]
 		then
