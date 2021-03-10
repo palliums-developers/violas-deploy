@@ -37,7 +37,6 @@ do
 		[ "$ip_full_node" == "$node_ip" ]
 		curl -O -s http://$IP/start.sh && sudo chmod 775 start.sh
 		sed -i "2s|cd.*|cd \$script_path/full_nodes/|g" $HOME/violascfg/start.sh
-		sed -i "41s|cd.*|cd \$(dirname \$(dirname \$data_dir_path))|g" $HOME/violascfg/start.sh
 	else
 		curl -O -s http://$IP/start.sh && sudo chmod 775 start.sh
 	fi
