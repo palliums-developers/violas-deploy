@@ -90,6 +90,30 @@ do
 done
 
 # 根据输入的num_full_nodes判断生成验证节点或全节点配置文件，num_full_nodes为0时只生成验证节点配置文件
+
+cd  $HOME
+if [ -d "violascfg" ]; then
+	while true
+	do
+		read -r -p "violascfg already exist, Are You Sure Delete? [Y/n] " input
+		case $input in
+		    [yY][eE][sS]|[yY])
+				rm -rf $HOME/violascfg
+				break
+				;;
+	
+		    [nN][oO]|[nN])
+				echo "Exit compilation, please delete config file manually"
+				exit 1	       	
+				;;
+	
+		    *)
+				echo "Invalid input..."
+				;;
+		esac
+	done
+fi
+
 cd $HOME/violas/target/release/
 if [ $num_full_nodes -eq 0 ]; then
 	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num_validator >$config_dir_path/swarm.log 2>&1 &
@@ -98,7 +122,8 @@ else
 	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num_validator -f $num_full_nodes >$config_dir_path/swarm.log 2>&1 &
 	sleep 10
 fi
-sh stop.sh
+sh $config_dir_path/stop.sh
+
 # 修改validator节点配置文件端口并打包
 i=1
 cd  $HOME

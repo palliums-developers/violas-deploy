@@ -1,8 +1,10 @@
 cd $(pwd)
 sh stop.sh
+sleep 2
 filename=`ls -l |awk '/^d/ {print $NF}'`
 if [ ! -d "$filename" ];then
-	echo "violas data directories do not exist "
+	tar -zxf *.tar.gz
+	sh start.sh
 else
 	while true
 	do
@@ -10,6 +12,8 @@ else
 		case $input in
 		    [yY][eE][sS]|[yY])
 				rm -rf $(pwd)/$filename
+				tar -zxf *.tar.gz
+				sh start.sh
 				break
 				;;
 	
@@ -24,5 +28,3 @@ else
 	esac
 	done
 fi
-tar -zxf *.tar.gz
-sh start.sh

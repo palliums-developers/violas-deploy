@@ -1,7 +1,3 @@
-cd $HOME/violascfg/
-filename=`ls -l |awk '/^d/ {print $NF}'`
-cd $filename
-data_dir_path=`echo $(pwd)`
 violaspro="diem-node"
 pythonpro="violas_chain_monitor.py"
 
