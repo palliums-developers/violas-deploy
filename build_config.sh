@@ -94,13 +94,11 @@ cd $HOME/violas/target/release/
 if [ $num_full_nodes -eq 0 ]; then
 	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num_validator >$config_dir_path/swarm.log 2>&1 &
 	sleep 10
-	killall diem-node
 else
 	nohup $HOME/violas/target/release/diem-swarm -c $HOME/violascfg --diem-node $HOME/violas/target/release/diem-node -n $num_validator -f $num_full_nodes >$config_dir_path/swarm.log 2>&1 &
 	sleep 10
-	killall diem-node
 fi
-
+sh stop.sh
 # 修改validator节点配置文件端口并打包
 i=1
 cd  $HOME
