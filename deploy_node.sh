@@ -21,6 +21,7 @@ curl -O -s http://$IP/$node_ip.tar.gz
 tar -zxf $node_ip.tar.gz
 
 # 获取当前目录下所有文件夹名
+script_path=`echo $(pwd)`
 filename=`ls -l |awk '/^d/ {print $NF}'`
 cd $filename
 data_dir_path=`echo $(pwd)`
