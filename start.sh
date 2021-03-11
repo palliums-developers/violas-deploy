@@ -3,7 +3,7 @@ cd $script_path
 data_dir=`ls -l |awk '/^d/ {print $NF}'`
 cd $data_dir
 data_dir_path=`echo $(pwd)`
-sed -i "s|path:.*/violascfg|path: $(dirname $script_path)/violascfg|g" $data_dir_path/node.yaml
+sed -i "s|path:.*/|path: $script_path/|g" $data_dir_path/node.yaml
 sed -i "s|data_dir:.*|data_dir: $data_dir_path|g" $data_dir_path/node.yaml
 
 violaspro="diem-node"

@@ -19,7 +19,7 @@ cargo build --release --all
 
 read  -p "Please enter chianID:" chain_id
 read  -p "Please enter the number of validators nodes:" num_validator
-if [ $num_full_nodes -eq 1 ]; then
+if [ $num_validator -eq 1 ]; then
 	read  -p "Please enter validator IP:" validators_ip
 	master_node_ip=$validators_ip
 else
@@ -49,7 +49,6 @@ if [ ! -d "deploy_node" ]; then
 	cp $config_dir_path/start.sh .
 	cp $config_dir_path/stop.sh .
 	cp $config_dir_path/cli.sh .
-	cp $config_dir_path/full_node_cli.sh .
 	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/diem-node .
 	cp $HOME/violas/target/release/cli .
@@ -61,7 +60,6 @@ else
 	cp $config_dir_path/start.sh .
 	cp $config_dir_path/stop.sh .
 	cp $config_dir_path/cli.sh .
-	cp $config_dir_path/full_node_cli.sh .
 	cp $config_dir_path/violas_chain_monitor.py .
 	cp $HOME/violas/target/release/diem-node .
 	cp $HOME/violas/target/release/cli .
