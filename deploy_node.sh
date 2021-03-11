@@ -20,17 +20,8 @@ fi
 curl -O -s http://$IP/$node_ip.tar.gz
 tar -zxf $node_ip.tar.gz
 
-# 获取当前目录下所有文件夹名
 script_path=`echo $(pwd)`
-filename=`ls -l |awk '/^d/ {print $NF}'`
-cd $filename
-data_dir_path=`echo $(pwd)`
-sed -i "s|path:.*/violascfg|path: $(dirname $script_path)/violascfg|g" $data_dir_path/node.yaml
-sed -i "s|data_dir:.*|data_dir: $data_dir_path|g" $data_dir_path/node.yaml
-
-logfile="$(dirname $data_dir_path)/violas.log"
-cd $(dirname $data_dir_path)
-
+cd $script_path
 full_nodes_array=(${Full_nodes_IP//,/ })
 for ip_full_node in ${full_nodes_array[@]}
 do
@@ -51,6 +42,7 @@ curl -O -s http://$IP/cli.sh && sudo chmod 775 cli.sh
 curl -O -s http://$IP/violas_chain_monitor.py && sudo chmod 775 violas_chain_monitor.py
 sh start.sh
 
+logfile="$script_path/violas.log"
 ps -fe|grep diem-node |grep -v grep
 if [ $? -ne 0 ]
 	then
