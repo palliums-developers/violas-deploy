@@ -17,7 +17,7 @@ if [ ! -d "violas" ];then
 else	
 	cd violas && git checkout violas && git pull origin violas:violas && git checkout $tag && ./scripts/dev_setup.sh
 fi
-source .cargo/env
+source $HOME/.cargo/env
 cargo build --release --all 
 
 while true
@@ -26,17 +26,17 @@ do
 	# if [[ $num =~ ^[1-5]+$ ]]; then
 	# 	break
 	if [ $chainid -eq 1 ]; then
-		echo "Chainid not used yet,please re-enter."
+		echo "Chainid not used yet,please re-enter:"
 	elif [ $chainid -eq 2 ]; then
 		break
 	elif [ $chainid -eq 3 ]; then
-		echo "Chainid not used yet,please re-enter."
+		echo "Chainid not used yet,please re-enter:"
 	elif [ $chainid -eq 4 ]; then
 		break
 	elif [ $chainid -eq 5 ]; then
 		break
 	else
-		echo "Chainid input error,please re-enter."
+		echo "Chainid input error,please re-enter:"
 	fi
 done
 
