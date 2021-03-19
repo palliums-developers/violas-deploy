@@ -96,10 +96,10 @@ done
 
 # 根据输入的num_full_nodes判断生成验证节点或全节点配置文件，num_full_nodes为0时只生成验证节点配置文件
 if [ $num_full_nodes -eq 0 ]; then
-	nohup $violas_path/target/release/diem-swarm -c $script_path/config --diem-node $violas_path/target/release/diem-node -n $num_validator >$script_path/config/swarm.log 2>&1 &
+	nohup ./diem-swarm -c $script_path/config --diem-node ./diem-node -n $num_validator >$script_path/swarm.log 2>&1 &
 	sleep 10
 else
-	nohup $violas_path/target/release/diem-swarm -c $script_path/config --diem-node $violas_path/target/release/diem-node -n $num_validator -f $num_full_nodes >$script_path/config/swarm.log 2>&1 &
+	nohup ./diem-swarm -c $script_path/config --diem-node ./diem-node -n $num_validator -f $num_full_nodes >$script_path/swarm.log 2>&1 &
 	sleep 10
 fi
 sh $script_path/stop.sh
@@ -160,7 +160,7 @@ if [  -f "0/node.yaml" ]; then
 	echo "path:$script_path/config/"
 	echo "Please run the following command on the deployment server:"
 	echo "curl -O http://$master_node_ip/deploy_node.sh && chmod 775 deploy_node.sh"
-	echo "curl -O http://$master_node_ip/deploy_full_node.sh && chmod 775 deploy_full_node.sh"
+	echo "curl -O http://$master_node_ip/full_node/deploy_full_node.sh && chmod 775 deploy_full_node.sh"
 	echo "********************************************************"
 else
 	echo "********************************************************"
