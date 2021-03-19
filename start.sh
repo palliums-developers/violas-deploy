@@ -3,8 +3,10 @@ cd $script_path
 data_dir=`ls -l |awk '/^d/ {print $NF}'`
 cd $data_dir
 data_dir_path=`echo $(pwd)`
-sed -i "s|path:.*/|path: $script_path/|g" $data_dir_path/node.yaml
-sed -i "s|data_dir:.*|data_dir: $data_dir_path|g" $data_dir_path/node.yaml
+config_file="node.yaml"
+sed -i "s|path:.*/|path: $script_path/|g" $data_dir_path/$config_file
+sed -i "s|data_dir:.*|data_dir: $data_dir_path|g" $data_dir_path/$config_file
+
 
 violaspro="diem-node"
 pythonpro="violas_chain_monitor.py"
@@ -12,13 +14,14 @@ logfile="$script_path/violas.log"
 split_line="*************************************************************"
 
 #启动violas链
+cd $script_path
 ViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 if [ $ViolasPPID -eq 0 ]
 	then
 	echo "$split_line">>$logfile
 	echo "`date "+%Y-%m-%d %H:%M:%S"` :violas is starting" >>$logfile
 	echo "$split_line">>$logfile
-	nohup $script_path/diem-node  -f $data_dir_path/node.yaml >>$logfile 2>&1 &
+	nohup diem-node  -f $data_dir_path/$config_file >>$logfile 2>&1 &
 	sleep 3
 	CurrentViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 	if [ $CurrentViolasPPID -ne 0 ]
@@ -40,7 +43,6 @@ sleep 3
 PythonPPID=`ps -ef | grep $pythonpro | grep -v grep | wc -l`
 if [ $PythonPPID -eq 0 ]
 	then
-	cd $script_path
 	CurrentViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 	if [ $CurrentViolasPPID -ne 0 ]
 		then
