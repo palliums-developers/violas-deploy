@@ -55,13 +55,13 @@ if [ $num_full_nodes -ne 0 ]; then
 fi
 
 cd $violas_path/target/release/
-strip *
+strip diem-node cli
 if [  -f "genesis.yaml" ]; then
 	rm genesis.yaml
 fi
 touch genesis.yaml
 echo "---" >> genesis.yaml
-echo "chain_id: $chain_id" >> genesis.yaml
+echo "chain_id: $chainid" >> genesis.yaml
 echo "validators:" >> genesis.yaml
 
 # 根据输入验证节点IP生成validators.conf
@@ -96,10 +96,10 @@ done
 
 # 根据输入的num_full_nodes判断生成验证节点或全节点配置文件，num_full_nodes为0时只生成验证节点配置文件
 if [ $num_full_nodes -eq 0 ]; then
-	nohup diem-swarm -c $script_path/config --diem-node diem-node -n $num_validator >$script_path/config/swarm.log 2>&1 &
+	nohup diem-swarm -c $script_path/config --diem-node diem-node -n $num_validator >$script_path/swarm.log 2>&1 &
 	sleep 10
 else
-	nohup diem-swarm -c $script_path/config --diem-node diem-node -n $num_validator -f $num_full_nodes >$script_path/config/swarm.log 2>&1 &
+	nohup diem-swarm -c $script_path/config --diem-node diem-node -n $num_validator -f $num_full_nodes >$script_path/swarm.log 2>&1 &
 	sleep 10
 fi
 sh $script_path/stop.sh
