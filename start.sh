@@ -21,7 +21,7 @@ if [ $ViolasPPID -eq 0 ]
 	echo "$split_line">>$logfile
 	echo "`date "+%Y-%m-%d %H:%M:%S"` :violas is starting" >>$logfile
 	echo "$split_line">>$logfile
-	nohup diem-node  -f $data_dir_path/$config_file >>$logfile 2>&1 &
+	nohup ./diem-node  -f $data_dir_path/$config_file >>$logfile 2>&1 &
 	sleep 3
 	CurrentViolasPPID=`ps -ef | grep $violaspro | grep -v grep | wc -l`
 	if [ $CurrentViolasPPID -ne 0 ]

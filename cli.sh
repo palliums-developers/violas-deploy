@@ -20,9 +20,9 @@ if [  -f "waypoint.txt" ]; then
 		fi
 	done
 	if [  -f "mint.key" ]; then
-		cli -c $chainid -m mint.key -u http://127.0.0.1:50001 --waypoint $waypoint.txt
+		./cli -c $chainid -m mint.key -u http://127.0.0.1:50001 --waypoint $waypoint
 	else
-		cli -c $chainid -u http://127.0.0.1:50001 --waypoint $waypoint.txt
+		./cli -c $chainid -u http://127.0.0.1:50001 --waypoint $waypoint
 	fi
 else
 	echo "waypoint.txt does not exist."
