@@ -22,8 +22,7 @@ tar -zxf $node_ip.tar.gz
 full_nodes_array=(${Full_nodes_IP//,/ })
 for ip_full_node in ${full_nodes_array[@]}
 do
-	if
-		[ "$ip_full_node" == "$node_ip" ]
+	if [ "$ip_full_node" == "$node_ip" ];then
 		curl -O -s http://$IP/start.sh && sudo chmod 775 start.sh
 		sed -i "2s|cd.*|cd \$script_path/full_nodes/|g" $script_path/start.sh
 	else
