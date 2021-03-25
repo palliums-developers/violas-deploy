@@ -19,9 +19,9 @@ curl -O -s http://$IP/cli && sudo chmod 775 cli
 curl -O -s http://$IP/cli.sh && sudo chmod 775 cli.sh
 curl -O -s http://$IP/violas_chain_monitor.py && sudo chmod 775 violas_chain_monitor.py
 
-data_dir_str="sed -i \"s|data_dir:.*|data_dir: \$script_path/full_node|g\" \$data_dir_path/\$config_file"
-from_file_str="sed -i \"s|from_file:.*|from_file: \$script_path/waypoint.txt|g\" \$data_dir_path/\$config_file"
-genesis_file_location_str="sed -i \"s|genesis_file_location:.*|genesis_file_location: \$script_path/full_node/genesis.blob|g\" \$data_dir_path/\$config_file"
+data_dir_str="sed -i \"s|data_dir:.*|data_dir: \$script_path\/full_node|g\" \$data_dir_path\/\$config_file"
+from_file_str="sed -i \"s|from_file:.*|from_file: \$script_path\/waypoint.txt|g\" \$data_dir_path\/\$config_file"
+genesis_file_location_str="sed -i \"s|genesis_file_location:.*|genesis_file_location: \$script_path\/full_node\/genesis.blob|g\" \$data_dir_path\/\$config_file"
 sed -i "7s/.*/$data_dir_str/g" $script_path/start.sh
 sed -i "8s/.*/$from_file_str/g" $script_path/start.sh
 sed -i "9s/.*/$genesis_file_location_str/g" $script_path/start.sh
@@ -56,7 +56,8 @@ do
 done
 curl -O -s http://$IP/full_node/genesis.blob
 
-sh $script_path/start.sh
+cd $script_path
+sh start.sh
 
 logfile="$script_path/violas.log"
 ps -fe|grep diem-node |grep -v grep
