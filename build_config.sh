@@ -119,12 +119,12 @@ cp $script_path/violas_chain_monitor.py .
 cp $violas_path/target/release/diem-node .
 cp $violas_path/target/release/cli .
 touch waypoint.txt
-sed -i "s|IP=.*|IP=$master_node_ip|g" $deploy_path/deploy_node.sh
-sed -i "s|IP=.*|IP=$master_node_ip|g" $deploy_path/full_node/deploy_full_node.sh
+sed -i "s|IP=.*|IP=$master_node_ip|g" deploy_node.sh
+sed -i "s|Full_nodes_IP=.*|Full_nodes_IP=$full_nodes_ip|g" deploy_node.sh
 if  [ $num_full_nodes -ne 0 ]; then
-	cp -R $script_path/full_node $deploy_path
-	cp $script_path/config/full_nodes/0/genesis.blob $deploy_path/full_node
-	sed -i "s|Full_nodes_IP=.*|Full_nodes_IP=$full_nodes_ip|g" $deploy_path/deploy_node.sh
+	cp -R $script_path/full_node .
+	cp $script_path/config/full_nodes/0/genesis.blob full_node
+	sed -i "s|IP=.*|IP=$master_node_ip|g" full_node/deploy_full_node.sh	
 fi
 
 # 修改validator节点配置文件端口并打包
