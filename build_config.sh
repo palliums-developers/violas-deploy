@@ -101,10 +101,6 @@ if [ $num_full_nodes -eq 0 ]; then
 else
 	nohup ./diem-swarm -c $script_path/config --diem-node ./diem-node -n $num_validator -f $num_full_nodes >$script_path/swarm.log 2>&1 &
 	sleep 10
-	sed -i "s|Full_nodes_IP=.*|Full_nodes_IP=$full_nodes_ip|g" $deploy_path/deploy_node.sh
-	cp -R $script_path/full_node $deploy_path
-	cp $script_path/config/full_nodes/0/genesis.blob $deploy_path/full_node
-
 fi
 sh $script_path/stop.sh
 
@@ -125,6 +121,11 @@ cp $violas_path/target/release/cli .
 touch waypoint.txt
 sed -i "s|IP=.*|IP=$master_node_ip|g" $deploy_path/deploy_node.sh
 sed -i "s|IP=.*|IP=$master_node_ip|g" $deploy_path/full_node/deploy_full_node.sh
+if  [ $num_full_nodes -ne 0 ]; then
+	sed -i "s|Full_nodes_IP=.*|Full_nodes_IP=$full_nodes_ip|g" $deploy_path/deploy_node.sh
+	cp -R $script_path/full_node $deploy_path
+	cp $script_path/config/full_nodes/0/genesis.blob $deploy_path/full_node
+fi
 
 # 修改validator节点配置文件端口并打包
 cd $script_path/config
