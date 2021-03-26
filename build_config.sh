@@ -68,7 +68,7 @@ echo "validators:" >> genesis.yaml
 validators_array=(${validators_ip//,/ })
 for ip in ${validators_array[@]}
 do
-	echo " - /ip4/$ip/tcp/40002" >> genesis.yaml
+	echo "  - /ip4/$ip/tcp/40002" >> genesis.yaml
 done
 
 # cd  $(dirname $script_path)
@@ -101,6 +101,10 @@ if [ $num_full_nodes -eq 0 ]; then
 else
 	nohup ./diem-swarm -c $script_path/config --diem-node ./diem-node -n $num_validator -f $num_full_nodes >$script_path/swarm.log 2>&1 &
 	sleep 10
+	sed -i "s|Full_nodes_IP=.*|Full_nodes_IP=$full_nodes_ip|g" $deploy_path/deploy_node.sh
+	cp -R $script_path/full_node $deploy_path
+	cp $script_path/config/full_nodes/0/genesis.blob $deploy_path/full_node
+
 fi
 sh $script_path/stop.sh
 
@@ -115,16 +119,12 @@ cp $script_path/clean_db_start.sh .
 cp $script_path/start.sh .
 cp $script_path/stop.sh .
 cp $script_path/cli.sh .
-cp -R $script_path/full_node .
-cp $script_path/config/full_nodes/0/genesis.blob full_node
 cp $script_path/violas_chain_monitor.py .
 cp $violas_path/target/release/diem-node .
 cp $violas_path/target/release/cli .
 touch waypoint.txt
 sed -i "s|IP=.*|IP=$master_node_ip|g" $deploy_path/deploy_node.sh
 sed -i "s|IP=.*|IP=$master_node_ip|g" $deploy_path/full_node/deploy_full_node.sh
-sed -i "s|Full_nodes_IP=.*|Full_nodes_IP=$full_nodes_ip|g" $deploy_path/deploy_node.sh
-
 
 # 修改validator节点配置文件端口并打包
 cd $script_path/config
