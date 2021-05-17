@@ -168,9 +168,9 @@ def loopMonitor(IP,processname,servername,log_file,error_file):
     loopMonitor(IP,processname,servername,log_file,error_file)
 
 if __name__ == '__main__':
-	cf = configparser.ConfigParser()
-	cf.read(os.path.abspath('.')+"/config.ini")  # 拼接得到config.ini文件的路径，直接使用
-	secs = cf.sections()  # 获取文件中所有的section(一个配置文件中可以有多个配置，如数据库相关的配置，邮箱相关的配置，每个section由[]包裹，即[section])，并以列表的形式返回
+    cf = configparser.ConfigParser()
+    cf.read(os.path.abspath('.')+"/config.ini")  # 拼接得到config.ini文件的路径，直接使用
+    secs = cf.sections()  # 获取文件中所有的section(一个配置文件中可以有多个配置，如数据库相关的配置，邮箱相关的配置，每个section由[]包裹，即[section])，并以列表的形式返回
 	
     path = os.path.dirname(os.path.realpath(__file__))
     processname = "diem-node" #设置进程名称
