@@ -21,14 +21,22 @@ full_node_networks:
       network_id:
         private: vfn
       seed_addrs:
-       B5B333AABBF92E78524E2129B722EACA:
-         - /ip4/52.151.2.66/tcp/40013/ln-noise-ik/c6c9ae2455fd9be40495d3c9ef6550cc1dba5a8368afcba80d51e2f5e5fcdc3f/ln-handshake/0
-       3BCB04241AC0A25F38D86925B585FC57:
-         - /ip4/52.151.9.191/tcp/40013/ln-noise-ik/428d2f1c47d1fe17b7fd851e6eec73231b3a33fbe0856dba2b7ccac99b92ee57/ln-handshake/0
-       9672771F89F179E9F8AA93E1689DE6A5:
-         - /ip4/52.229.12.97/tcp/40013/ln-noise-ik/20bdc3828adcc2eb597b1811f137580795de4e297b10d57ae1ea3e2da96d9777/ln-handshake/0
-       DC1090DE1474FE40201C95DA038E8EC4:
-         - /ip4/52.183.33.162/tcp/40013/ln-noise-ik/8c03b240fc02210a835297f3c1ae008a41724c5730a66eb99bbd8d0e085a2b0c/ln-handshake/0
+        B5B333AABBF92E78524E2129B722EACA:
+          addresses:
+            - /ip4/52.151.9.191/tcp/40013/ln-noise-ik/c6c9ae2455fd9be40495d3c9ef6550cc1dba5a8368afcba80d51e2f5e5fcdc3f/ln-handshake/0
+          role: Validator
+        3BCB04241AC0A25F38D86925B585FC57:
+          addresses:
+            - /ip4/52.229.12.97/tcp/40013/ln-noise-ik/428d2f1c47d1fe17b7fd851e6eec73231b3a33fbe0856dba2b7ccac99b92ee57/ln-handshake/0
+          role: Validator
+        9672771F89F179E9F8AA93E1689DE6A5:
+          addresses:
+            - /ip4/52.183.33.162/tcp/40013/ln-noise-ik/20bdc3828adcc2eb597b1811f137580795de4e297b10d57ae1ea3e2da96d9777/ln-handshake/0
+          role: Validator
+        DC1090DE1474FE40201C95DA038E8EC4:
+          addresses:
+            - /ip4/13.77.137.84/tcp/40013/ln-noise-ik/8c03b240fc02210a835297f3c1ae008a41724c5730a66eb99bbd8d0e085a2b0c/ln-handshake/0
+          role: Validator
 
             
       #seed_addrs:
@@ -48,6 +56,6 @@ json_rpc:
 
 # Do not modify this value as it dictates upstream peers, those which receive outgoing transactions
 # and funnel downward the latest blockchain state.
-upstream:
-    networks:
-      - private: vfn
+# upstream:
+#     networks:
+#       - private: vfn

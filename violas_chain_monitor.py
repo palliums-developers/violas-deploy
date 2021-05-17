@@ -11,17 +11,22 @@ import urllib
 import json
 
 import os
+import configparser
 import psutil
 import time
 
 def violas_error_sendmail(IP,error_file,servername,*receivers):
     #******设置发送邮件参数******
     # 第三方 SMTP 服务
-    mail_host = "smtp.exmail.qq.com"  #设置服务器
-    mail_user = "zyb@palliums.org"   #用户名
-    mail_pass = "Qaz!123456"   #口令 
+    # mail_host = "smtp.exmail.qq.com"  #设置服务器
+    # mail_user = "xxx"   #用户名
+    # mail_pass = "xxx"   #口令 
     
-    sender = 'zyb@palliums.org'
+    mail_host = cf.get("Email", "mail_host")  #设置服务器
+    mail_user = cf.get("Email", "mail_user")   #用户名
+    mail_pass = cf.get("Email", "mail_pass")   #口令
+    
+    sender = cf.get("Email", "sender")
     receivers = receivers 
 
     #创建一个带附件的实例
@@ -93,7 +98,7 @@ def send_sms(apikey, text, mobile):
 
 def violas_error_sendsms(IP,servername,error_file,mobile):
     #修改为您的apikey.可在官网（http://www.yunpian.com)登录后获取
-    apikey = "c1c127eca677a50d341ded26d3022196"
+    apikey = cf.get("SMS", "apikey")
     #修改为您要发送的手机号码，多个号码用逗号隔开
     # mobile = "18810656022"
     #修改为您要发送的短信内容
@@ -163,12 +168,16 @@ def loopMonitor(IP,processname,servername,log_file,error_file):
     loopMonitor(IP,processname,servername,log_file,error_file)
 
 if __name__ == '__main__':
+	cf = configparser.ConfigParser()
+	cf.read(os.path.abspath('.')+"/config.ini")  # 拼接得到config.ini文件的路径，直接使用
+	secs = cf.sections()  # 获取文件中所有的section(一个配置文件中可以有多个配置，如数据库相关的配置，邮箱相关的配置，每个section由[]包裹，即[section])，并以列表的形式返回
+	
     path = os.path.dirname(os.path.realpath(__file__))
     processname = "diem-node" #设置进程名称
     servername= "Violas Chain"   #设置服务名称
     log_file = path + "/violas.log"    #设置日志文件路径
     error_file = path + "/violas_error_log.txt"  #设置发送错误邮件日志路径
     IP = get_filename(path)          #设置部署服务器IP
-    mobile = "18810656022"  #设置接收短信的手机号，多个号码用逗号隔开
-    receivers = ['zyb@palliums.org']  #设置接收邮件人列表，多个接收人用逗号隔开
+    mobile = cf.get("Receiver-Info", "mobile")  #设置接收短信的手机号，多个号码用逗号隔开
+    receivers = [cf.get("Receiver-Info", "receivers")]  #设置接收邮件人列表，多个接收人用逗号隔开
     loopMonitor(IP,processname,servername,log_file,error_file)

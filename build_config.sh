@@ -133,9 +133,9 @@ i=1
 for ip_validator_node in ${validators_array[@]}
 do
 	j=`expr $i - 1`
-	sed -i "89s|level:.*|level: ERROR|g" $script_path/config/$j/node.yaml
-	sed -i "108s|address:.*|address: \"0.0.0.0:50001\"|g" $script_path/config/$j/node.yaml
-	sed -i "72s|listen_address:.*|listen_address: /ip4/0.0.0.0/tcp/40013|g" $script_path/config/$j/node.yaml
+	sed -i "92s|level:.*|level: ERROR|g" $script_path/config/$j/node.yaml
+	sed -i "111s|address:.*|address: \"0.0.0.0:50001\"|g" $script_path/config/$j/node.yaml
+	sed -i "73s|listen_address:.*|listen_address: /ip4/0.0.0.0/tcp/40013|g" $script_path/config/$j/node.yaml
 	tar -zcf $deploy_path/$ip_validator_node.tar.gz  $j/* *$j*
 	let i++
 done
