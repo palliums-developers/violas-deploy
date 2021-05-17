@@ -20,7 +20,7 @@ full_node_networks:
       listen_address: "/ip4/127.0.0.1/tcp/6180"
       network_id:
         private: vfn
-      seed_addrs:
+      seeds:
         B5B333AABBF92E78524E2129B722EACA:
           addresses:
             - /ip4/52.151.9.191/tcp/40013/ln-noise-ik/c6c9ae2455fd9be40495d3c9ef6550cc1dba5a8368afcba80d51e2f5e5fcdc3f/ln-handshake/0

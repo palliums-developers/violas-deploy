@@ -1,6 +1,6 @@
 base:
     # Update this value to the location you want Violas to store its database
-    data_dir: "/home/ops/violascfg/0"
+    data_dir: "/home/ops/violascfg/full_node"
     role: "full_node"
     waypoint:
         # Update this value to that which Violas publicly provides. Please regard the directions
@@ -11,7 +11,7 @@ execution:
     # Update this to the location to where the genesis.blob is stored, prefer fullpaths
     # Note, this must be paired with a waypoint. If you update your waypoint without a
     # corresponding genesis, the file location should be an empty path.
-    genesis_file_location: "/home/ops/violascfg/0/genesis.blob"
+    genesis_file_location: "/home/ops/violascfg/full_node/genesis.blob"
 
 full_node_networks:
     - discovery_method: "none"
@@ -20,18 +20,18 @@ full_node_networks:
       listen_address: "/ip4/127.0.0.1/tcp/6180"
       network_id:
         private: vfn
-      seed_addrs:
+      seeds:
         B5B333AABBF92E78524E2129B722EACA:
           addresses:
-            - /ip4/51.140.241.96/tcp/40013/ln-noise-ik/c6c9ae2455fd9be40495d3c9ef6550cc1dba5a8368afcba80d51e2f5e5fcdc3f/ln-handshake/0
+            - /ip4/51.140.241.96/tcp/40013/ln-noise-ik/1103bd7e9fa00c692709de1d78401521857f7f72962184d365e09b65a3427226/ln-handshake/0
           role: Validator
         3BCB04241AC0A25F38D86925B585FC57:
           addresses:
-            - /ip4/18.220.66.235/tcp/40013/ln-noise-ik/428d2f1c47d1fe17b7fd851e6eec73231b3a33fbe0856dba2b7ccac99b92ee57/ln-handshake/0
+            - /ip4/18.220.66.235/tcp/40013/ln-noise-ik/127dc789a2998a71d09f32da9ec036de90ab31d240c92a5534dcd6191e2ff470/ln-handshake/0
           role: Validator
         9672771F89F179E9F8AA93E1689DE6A5:
           addresses:
-            - /ip4/52.27.228.84/tcp/40013/ln-noise-ik/20bdc3828adcc2eb597b1811f137580795de4e297b10d57ae1ea3e2da96d9777/ln-handshake/0
+            - /ip4/52.27.228.84/tcp/40013/ln-noise-ik/ed16104ea5281120fc74281bd600ebd8a3054cee2a5fa36ae7ba171b4be0143d/ln-handshake/0
           role: Validator
         # DC1090DE1474FE40201C95DA038E8EC4:
         #   addresses:

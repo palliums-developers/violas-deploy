@@ -34,9 +34,9 @@ do
 		echo "Chainid not used yet,please re-enter:"
 	elif [ $chainid -eq 2 ]; then
 		curl -O -s http://$IP/full_node/full_node_TESTING.yaml
-		sed -i "s|data_dir:.*|data_dir: \$script_path/full_node|g" $script_path/full_node/full_node_TESTING.yaml
-		sed -i "s|from_file:.*|from_file: \$script_path/waypoint.txt|g" $script_path/full_node/full_node_TESTING.yaml
-		sed -i "s|genesis_file_location:.*|genesis_file_location: \$script_path/full_node/genesis.blob|g" $script_path/full_node/full_node_TESTING.yaml
+		sed -i "s|data_dir:.*|data_dir: \"\$script_path/full_node\"|g" $script_path/full_node/full_node_TESTING.yaml
+		sed -i "s|from_file:.*|from_file: \"\$script_path/waypoint.txt\"|g" $script_path/full_node/full_node_TESTING.yaml
+		sed -i "s|genesis_file_location:.*|genesis_file_location: \"\$script_path/full_node/genesis.blob\"|g" $script_path/full_node/full_node_TESTING.yaml
 		sed -i "s|config_file=.*|config_file=\"full_node_TESTING.yaml\"|g" $script_path/start.sh
 		break
 	elif [ $chainid -eq 3 ]; then
